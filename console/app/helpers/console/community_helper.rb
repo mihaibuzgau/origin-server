@@ -21,7 +21,7 @@ module Console::CommunityHelper
   end
 
   def open_bug_url
-    'https://bugzilla.redhat.com/enter_bug.cgi?product=OpenShift%20Origin'
+    'https://bugzilla.redhat.com/enter_bug.cgi?product=OpenShift%20Enterprise'
   end
 
   def openshift_github_url
