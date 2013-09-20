@@ -28,7 +28,6 @@ Requires:      php-pdo
 Requires:      php-gd
 Requires:      php-xml
 Requires:      php-mysql
-Requires:      php-pecl-mongo
 Requires:      php-pgsql
 Requires:      php-mbstring
 Requires:      php-pear

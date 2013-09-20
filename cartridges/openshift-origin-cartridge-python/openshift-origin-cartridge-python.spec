@@ -32,8 +32,6 @@ Requires:      httpd < 2.5
 %endif
 
 Requires:      MySQL-python
-Requires:      pymongo
-Requires:      pymongo-gridfs
 Requires:      python-psycopg2
 Requires:      python-virtualenv
 Requires:      python-magic
