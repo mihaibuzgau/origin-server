@@ -36,17 +36,6 @@ Requires:      %{?scl:%scl_prefix}nodejs-mongodb
 Requires:      %{?scl:%scl_prefix}nodejs-mysql
 Requires:      %{?scl:%scl_prefix}nodejs-node-static
 
-Requires:      nodejs
-Requires:      nodejs-async
-Requires:      nodejs-connect
-Requires:      nodejs-express
-Requires:      nodejs-mongodb
-Requires:      nodejs-mysql
-Requires:      nodejs-node-static
-Requires:      nodejs-pg
-Requires:      nodejs-supervisor
-Requires:      nodejs-options
-
 Obsoletes: openshift-origin-cartridge-nodejs-0.6
 
 BuildArch:     noarch
@@ -69,7 +58,6 @@ Provides Node.js support to OpenShift. (Cartridge Format V2)
 %__mv %{buildroot}%{cartridgedir}/lib/nodejs_context.rhel %{buildroot}%{cartridgedir}/lib/nodejs_context
 %endif
 %if 0%{?fedora}
-%__rm -f %{buildroot}%{cartridgedir}/versions/0.6
 %__mv %{buildroot}%{cartridgedir}/metadata/manifest.yml.fedora %{buildroot}%{cartridgedir}/metadata/manifest.yml
 %__mv %{buildroot}%{cartridgedir}/lib/nodejs_context.fedora %{buildroot}%{cartridgedir}/lib/nodejs_context
 %endif

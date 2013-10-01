@@ -57,7 +57,6 @@ Requires:      ta-lib-devel
 Requires:      symlinks
 
 Obsoletes: openshift-origin-cartridge-community-python-2.7
-Obsoletes: openshift-origin-cartridge-community-python-3.3
 Obsoletes: openshift-origin-cartridge-python-2.6
 
 BuildArch:     noarch
@@ -97,7 +96,6 @@ Python cartridge for OpenShift. (Cartridge Format V2)
 %__rm -rf %{buildroot}%{cartridgedir}/usr/versions/shared
 %__rm -rf %{buildroot}%{cartridgedir}/usr/versions/2.7-scl
 
-%__mv %{buildroot}%{cartridgedir}/usr/versions/3.3-community %{buildroot}%{cartridgedir}/usr/versions/3.3/
 
 %files
 %dir %{cartridgedir}
@@ -107,7 +105,6 @@ Python cartridge for OpenShift. (Cartridge Format V2)
 %attr(0755,-,-) %{cartridgedir}/usr/versions/2.6/bin/*
 %endif
 %attr(0755,-,-) %{cartridgedir}/usr/versions/2.7/bin/*
-%attr(0755,-,-) %{cartridgedir}/usr/versions/3.3/bin/*
 %{cartridgedir}
 %doc %{cartridgedir}/README.md
 %doc %{cartridgedir}/COPYRIGHT
