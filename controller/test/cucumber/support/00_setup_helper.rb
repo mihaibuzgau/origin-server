@@ -11,7 +11,7 @@ $client_config = "/etc/openshift/express.conf"
 
  
 # Use the domain from the rails application configuration
-$domain = "example.com"
+$domain = "dev.rhcloud.com"
 
 # Set the dns helper module
 $bind_keyvalue=""
