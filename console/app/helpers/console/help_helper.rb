@@ -70,6 +70,26 @@ module Console::HelpHelper
     community_base_url 'open-source'
   end
 
+  def enterprise_paas_url
+    'http://www.redhat.com/solutions/cloud-computing/paas/'
+  end
+
+  def customer_portal_url
+    'https://access.redhat.com/home'
+  end
+
+  def open_support_case_url
+    'https://access.redhat.com/support/cases/new'
+  end
+
+  def enterprise_documentation_url
+    'https://access.redhat.com/knowledge/docs/OpenShift_Enterprise/'
+  end
+
+  def enterprise_license_url
+    'http://www.apache.org/licenses/LICENSE-2.0'
+  end
+
   def get_involved_developers_url
     community_base_url 'developers/get-involved'
   end
