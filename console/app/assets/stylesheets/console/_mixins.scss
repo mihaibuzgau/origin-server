@@ -2,11 +2,41 @@
 }
 
 @mixin brand {
-  position: relative;
-  top: 10px;
+  top: 0;
+  @media (max-width: 979px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  @media (max-width: 767px) {
+    height: 31px;
+    width: 315px;
+  }
+  @media (max-width: 420px) {
+    height: 26px;
+    width: 255px;
+  }
 }
 
 @mixin brand_hover {
+  &:hover:after {
+    background: #e22434;
+    bottom: 15px;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 51px;
+    position: absolute;
+    right: 1px;
+    @media (max-width: 767px) {
+      bottom: 14px;
+      left: 44px;
+      right: 2px;
+    }
+    @media (max-width: 420px) {
+      bottom: 15px;
+      left: 36px;
+    }
+  }
 }
 
 @mixin brand_ie {
