@@ -13,7 +13,7 @@
 Summary:       Cloud Development Node
 Name:          rubygem-%{gem_name}
 Version: 1.17.4
-Release:       1%{?dist}
+Release:       2%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -266,6 +266,9 @@ fi
 %attr(0755,-,-) /etc/cron.daily/openshift-origin-stale-lockfiles
 
 %changelog
+* Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.4-2
+- Release bump for OSE 2.0 RC1
+
 * Wed Nov 13 2013 Adam Miller <admiller@redhat.com> 1.17.4-1
 - Fix bug 1028389 (pmorie@gmail.com)
 - Fix upgrade issues when check_deployments_integrity is called with no options
