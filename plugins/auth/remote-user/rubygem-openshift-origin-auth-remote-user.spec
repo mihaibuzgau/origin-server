@@ -12,7 +12,7 @@
 Summary:       OpenShift plugin for remote-user authentication
 Name:          rubygem-%{gem_name}
 Version: 1.17.1
-Release:       1%{?dist}
+Release:       2%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -105,6 +105,10 @@ then
 fi
 
 %changelog
+* Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.1-2
+- <remote user auth plugin> - Allow /broker/rest/quickstarts unauthenticated.
+  (jdetiber@redhat.com)
+
 * Thu Nov 07 2013 Adam Miller <admiller@redhat.com> 1.17.1-1
 - bump_minor_versions for sprint 36 (admiller@redhat.com)
 
