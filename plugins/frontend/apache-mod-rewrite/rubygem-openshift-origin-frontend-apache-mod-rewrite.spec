@@ -16,7 +16,7 @@
 Summary:       OpenShift Apache mod_rewrite frontend plugin
 Name:          rubygem-%{gem_name}
 Version: 0.3.1
-Release:       1%{?dist}
+Release:       2%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://openshift.redhat.com
@@ -131,6 +131,9 @@ mv httpd/frontend-mod-rewrite-https-template.erb %{buildroot}%{appdir}/.httpd.d/
 /etc/openshift/node-plugins.d/
 
 %changelog
+* Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 0.3.1-2
+- Release bump for OSE 2.0 RC1
+
 * Thu Nov 07 2013 Adam Miller <admiller@redhat.com> 0.3.1-1
 - Bug 1024721 - Add purge functionality to the frontend plugins.
   (rmillner@redhat.com)
