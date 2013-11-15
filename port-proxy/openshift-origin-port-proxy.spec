@@ -7,7 +7,7 @@
 Summary:       Script to configure HAProxy to do port forwarding for OpenShift
 Name:          openshift-origin-port-proxy
 Version: 1.8.1
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       ASL 2.0
 URL:           http://www.openshift.com
 Source0:       http://mirror.openshift.com/pub/openshift-origin/source/%{name}/%{name}-%{version}.tar.gz
@@ -85,6 +85,9 @@ fi
 %config(noreplace) %{_sysconfdir}/openshift/port-proxy.cfg
 
 %changelog
+* Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.8.1-2
+- Release bump for OSE 2.0 RC1
+
 * Tue Jun 25 2013 Adam Miller <admiller@redhat.com> 1.8.1-1
 - bump_minor_versions for sprint 30 (admiller@redhat.com)
 
