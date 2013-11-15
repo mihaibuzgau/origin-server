@@ -7,7 +7,7 @@
 Summary:       Utility scripts for the OpenShift Origin node
 Name:          openshift-origin-node-util
 Version: 1.17.4
-Release:       1%{?dist}
+Release:       2%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -149,6 +149,9 @@ cp -p init.d/openshift-gears %{buildroot}%{_initddir}/
 %endif
 
 %changelog
+* Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.4-2
+- Release bump for OSE 2.0 RC1
+
 * Wed Nov 13 2013 Adam Miller <admiller@redhat.com> 1.17.4-1
 - Merge pull request #4124 from a13m/app-container
   (dmcphers+openshiftbot@redhat.com)
