@@ -10,7 +10,7 @@
 Summary:       Provides embedded PostgreSQL support
 Name:          openshift-origin-cartridge-postgresql
 Version: 1.17.3
-Release:       1%{?dist}
+Release:       2%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -101,6 +101,9 @@ Provides PostgreSQL cartridge support to OpenShift. (Cartridge Format V2)
 %doc %{cartridgedir}/LICENSE
 
 %changelog
+* Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.3-2
+- Release bump for OSE 2.0 RC1
+
 * Wed Nov 13 2013 Adam Miller <admiller@redhat.com> 1.17.3-1
 - Removing json-c for now as it requires upstream work (dmcphers@redhat.com)
 
