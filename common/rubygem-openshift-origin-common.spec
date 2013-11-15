@@ -10,7 +10,7 @@
 Summary:       Cloud Development Common
 Name:          rubygem-%{gem_name}
 Version: 1.17.2
-Release:       1%{?dist}
+Release:       2%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -117,6 +117,9 @@ cp bin/man/*.8 %{buildroot}%{_mandir}/man8/
 %doc %{gem_docdir}
 
 %changelog
+* Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.2-2
+- Release bump for OSE 2.0 RC1 
+
 * Mon Nov 11 2013 Adam Miller <admiller@redhat.com> 1.17.2-1
 - Merge pull request #4119 from mfojtik/bugzilla/1026273
   (dmcphers+openshiftbot@redhat.com)
