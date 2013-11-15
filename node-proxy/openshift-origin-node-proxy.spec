@@ -12,7 +12,7 @@
 Summary:       Routing proxy for OpenShift Origin Node
 Name:          openshift-origin-node-proxy
 Version: 1.16.3
-Release:       1%{?dist}
+Release:       2%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -138,6 +138,9 @@ fi
 %doc README
 
 %changelog
+* Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.16.3-2
+- Workaround for nodejs010 build root issue (bleanhar@redhat.com)
+
 * Fri Nov 08 2013 Adam Miller <admiller@redhat.com> 1.16.3-1
 - <node-proxy> Spec file updates to make brew happy (jdetiber@redhat.com)
 
