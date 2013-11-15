@@ -2,7 +2,7 @@
 
 Name:          openshift-origin-cartridge-perl
 Version: 1.16.4
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Perl cartridge
 Group:         Development/Languages
 License:       ASL 2.0
@@ -71,6 +71,9 @@ rm %{buildroot}%{cartridgedir}/metadata/manifest.yml.*
 
 
 %changelog
+* Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.16.4-2
+- Removing MongoDB cartridge dependencies (jdetiber@redhat.com)
+
 * Thu Nov 14 2013 Adam Miller <admiller@redhat.com> 1.16.4-1
 - Merge pull request #4186 from pmorie/latest-versions
   (dmcphers+openshiftbot@redhat.com)
