@@ -10,7 +10,7 @@
 Summary:       OpenShift Origin Management Console
 Name:          rubygem-%{gem_name}
 Version: 1.17.6
-Release:       1%{?dist}
+Release:       2%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           https://openshift.redhat.com
@@ -144,6 +144,15 @@ cp -a ./%{gem_dir}/* %{buildroot}%{gem_dir}/
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.6-2
+- Fix to correctly position and size logo along with adding :hover styles
+  (sgoodwin@redhat.com)
+- Adding OpenShift Enterprise logo to the admin console (bleanhar@redhat.com)
+- Bug 1019486 - [OSE 2.0] The logo in the ui should say Openshift Enterrpise.
+  (bleanhar@redhat.com)
+- <openshift-console> Bug 960855 - Fix bugzilla link for Enterprise
+  (jdetiber@redhat.com)
+
 * Thu Nov 14 2013 Adam Miller <admiller@redhat.com> 1.17.6-1
 - Fix bug 1030211: currency display (jliggitt@redhat.com)
 
