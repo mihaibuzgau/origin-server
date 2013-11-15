@@ -10,7 +10,7 @@
 Summary:       OpenShift Apache Virtual Hosts frontend plugin
 Name:          rubygem-%{gem_name}
 Version: 0.2.2
-Release:       1%{?dist}
+Release:       2%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://openshift.redhat.com
@@ -107,6 +107,9 @@ mv httpd/frontend-vhost-http-template.erb %{buildroot}/etc/httpd/conf.d/openshif
 /etc/openshift/node-plugins.d/
 
 %changelog
+* Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 0.2.2-2
+- Bug 1027629 - Workaround for oo-frontend-plugin-modify (bleanhar@redhat.com)
+
 * Thu Nov 07 2013 Adam Miller <admiller@redhat.com> 0.2.2-1
 - Bug 1024721 - Add purge functionality to the frontend plugins.
   (rmillner@redhat.com)
