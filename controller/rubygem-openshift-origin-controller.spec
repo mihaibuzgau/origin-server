@@ -10,7 +10,7 @@
 Summary:       Cloud Development Controller
 Name:          rubygem-%{gem_name}
 Version: 1.17.6
-Release:       1%{?dist}
+Release:       2%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -85,6 +85,10 @@ mkdir -p %{buildroot}/etc/openshift/
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.6-2
+- <tests> - Remove phpmyadmin from broker cuke test (jdetiber@redhat.com)
+- <controller> Hack cucumber tests to override $domain (jdetiber@redhat.com)
+
 * Thu Nov 14 2013 Adam Miller <admiller@redhat.com> 1.17.6-1
 - Bug 1028393 (lnader@localhost.localdomain)
 
