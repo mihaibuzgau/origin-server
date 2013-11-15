@@ -8,7 +8,7 @@
 Summary:       Utility scripts for the OpenShift Origin broker
 Name:          openshift-origin-broker-util
 Version: 1.17.5
-Release:       1%{?dist}
+Release:       2%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -93,6 +93,9 @@ cp -p man/*.8 %{buildroot}%{_mandir}/man8/
 %{_mandir}/man8/oo-stats.8.gz
 
 %changelog
+* Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.5-2
+- Release bump for OSE 2.0 RC1
+
 * Wed Nov 13 2013 Adam Miller <admiller@redhat.com> 1.17.5-1
 - app_info.rb in right place for rhel (tdawson@redhat.com)
 - Merge pull request #4171 from detiber/fixBuildRequires
