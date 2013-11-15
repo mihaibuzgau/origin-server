@@ -16,7 +16,7 @@
 Summary:       The OpenShift Management Console
 Name:          openshift-origin-console
 Version:       1.15.1
-Release:       1%{?dist}
+Release:       2%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -253,6 +253,18 @@ _EOF
 /sbin/fixfiles -R %{?scl:%scl_prefix}mod_passenger restore
 /sbin/restorecon -R -v /var/run
 %changelog
+* Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.15.1-2
+- Adding OpenShift Enterprise logo to the admin console (bleanhar@redhat.com)
+- Bug 1019486 - [OSE 2.0] The logo in the ui should say Openshift Enterrpise.
+  (bleanhar@redhat.com)
+- Bug 1019492 - Community related links should point to the page on PROD
+  (bleanhar@redhat.com)
+- Update systemd service definitions to rebuild Gemfile.lock
+  (jdetiber@redhat.com)
+- Added minitest to assets group depenedencies (hripps@redhat.com)
+- Removing test dependencies from Broker/Console build and runtime.
+  (bleanhar@redhat.com)
+
 * Fri Sep 13 2013 Troy Dawson <tdawson@redhat.com> 1.15.1-1
 - Bump up version (tdawson@redhat.com)
 - Fixing gem version requirement on sass-twitter-bootstrap (kraman@gmail.com)
