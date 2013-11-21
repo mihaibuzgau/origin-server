@@ -9,8 +9,8 @@
 
 Summary:       Cloud Development Common
 Name:          rubygem-%{gem_name}
-Version: 1.17.2
-Release:       3%{?dist}
+Version: 1.17.2.1
+Release:       2%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -117,6 +117,9 @@ cp bin/man/*.8 %{buildroot}%{_mandir}/man8/
 %doc %{gem_docdir}
 
 %changelog
+* Thu Nov 21 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.2.1-2
+- Rebuild for OSE
+
 * Thu Nov 21 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.2-3
 - <oo-diagnostics> validate yum conf if possible - bug 1031686
   (lmeyer@redhat.com)
