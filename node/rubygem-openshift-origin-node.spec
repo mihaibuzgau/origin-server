@@ -12,7 +12,7 @@
 
 Summary:       Cloud Development Node
 Name:          rubygem-%{gem_name}
-Version: 1.17.4
+Version: 1.17.5
 Release:       2%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -266,6 +266,9 @@ fi
 %attr(0755,-,-) /etc/cron.daily/openshift-origin-stale-lockfiles
 
 %changelog
+* Wed Nov 27 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.5-2
+- allow oo-trap-user to run from non-public-key auth (markllama@gmail.com)
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.4-2
 - Release bump for OSE 2.0 RC1
 
