@@ -3,9 +3,32 @@ mysql_version="$1"
 old_cart_version="$2"
 new_cart_version="$3"
 
-if [[ $new_cart_version =~ 0.2.5 ]]; then
+if [[ $old_cart_version =~ 0.0.[1-5] ]]; then
   files=$(shopt -s nullglob; shopt -s dotglob; echo data/ib_logfile*)
   if [ ${#files} -gt 0 ]; then
     mv data/ib_logfile* /tmp
+  fi
+
+  primary_cart=$(basename $OPENSHIFT_PRIMARY_CARTRIDGE_DIR)
+  if [ "$primary_cart" != "mysql" ]; then
+    exit 0
+  else
+    $OPENSHIFT_MYSQL_DIR/bin/control start
+    if [ $? -ne 0 ]; then
+        echo "Failed to start mysql"
+        exit 1
+    fi
+
+    echo "
+    grant all on *.* to '$OPENSHIFT_MYSQL_DB_USERNAME'@'%' identified by '$OPENSHIFT_MYSQL_DB_PASSWORD' with grant option;
+    flush privileges; " | /usr/bin/mysql -h $OPENSHIFT_MYSQL_DB_HOST -P $OPENSHIFT_MYSQL_DB_PORT -u $OPENSHIFT_MYSQL_DB_USERNAME --password="$OPENSHIFT_MYSQL_DB_PASSWORD" --skip-column-names
+    ret_code=$?
+    if [ $ret_code -ne 0 ]; then
+        echo "Failed to upgrade mysql"
+        $OPENSHIFT_MYSQL_DIR/bin/control stop
+        exit $ret_code
+    fi
+
+    $OPENSHIFT_MYSQL_DIR/bin/control stop
   fi
 fi
