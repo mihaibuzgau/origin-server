@@ -219,6 +219,9 @@ module MCollective
         validate :namespace, /^.+$/
         uuid = request[:uuid]
         application_uuid = request[:app_uuid]
+        secret_token = request[:secret_token]
+        auth_iv = request[:auth_iv]
+        auth_token = request[:auth_token]
         namespace = request[:namespace]
         version = request[:version]
         ignore_cartridge_version = request[:ignore_cartridge_version] == 'true' ? true : false
@@ -229,7 +232,7 @@ module MCollective
 
         begin
           require 'openshift-origin-node/model/upgrade'
-          upgrader = OpenShift::Runtime::Upgrader.new(uuid, application_uuid, namespace, version, hostname, ignore_cartridge_version, OpenShift::Runtime::Utils::Hourglass.new(235))
+          upgrader = OpenShift::Runtime::Upgrader.new(uuid, application_uuid, secret_token, auth_iv, auth_token, namespace, version, hostname, ignore_cartridge_version, OpenShift::Runtime::Utils::Hourglass.new(235))
         rescue Exception => e
           report_exception e
           exitcode = 1
