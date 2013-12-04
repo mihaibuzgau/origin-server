@@ -13,6 +13,12 @@ if [[ $old_cart_version =~ 0.2.[0-4] ]]; then
   if [ "$primary_cart" != "mysql" ]; then
     exit 0
   else
+    pushd $OPENSHIFT_MYSQL_DIR
+
+    if [ ! -s $OPENSHIFT_MYSQL_DIR/conf/my.cnf.erb.hidden ]; then
+      cp $OPENSHIFT_MYSQL_DIR/conf/my.cnf.erb $OPENSHIFT_MYSQL_DIR/conf/my.cnf.erb.hidden
+    fi
+
     $OPENSHIFT_MYSQL_DIR/bin/control start
     if [ $? -ne 0 ]; then
         echo "Failed to start mysql"
@@ -30,5 +36,6 @@ if [[ $old_cart_version =~ 0.2.[0-4] ]]; then
     fi
 
     $OPENSHIFT_MYSQL_DIR/bin/control stop
+    popd
   fi
 fi
