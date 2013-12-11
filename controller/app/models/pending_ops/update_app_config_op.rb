@@ -26,4 +26,7 @@ class UpdateAppConfigOp < PendingAppOp
     end
   end
 
+  def action_message
+    "Application config change did not complete"
+  end
 end
