@@ -354,11 +354,11 @@ class Haproxy
     # as required.
     #
     # This gets called every 5 seconds (by default, determined by
-    # CONFIG_VALIDATION_CHECK_INTERVAL defined above.
+    # CONFIG_VALIDATION_CHECK_INTERVAL defined above).
     #
     # Varibles currently being used:
     #
-    #   * @session_capcity_pct (determines how full current capacity us using
+    #   * @session_capcity_pct (determines how full current capacity is using
     #                          defined in "refresh" above).  100% full means
     #                          that all gears have all MAX_SESSIONS_PER_GEAR
     #                          or higher usage).  Though this number could be
@@ -434,7 +434,7 @@ class Haproxy
               # because flap detection is currently built to err on the side of
               # performance.  That is, as soon as we've hit a threshold to
               # scale up, do so.  However scaling down must meet not just a
-              # threshold but also severl flapping rules.  This may or may
+              # threshold but also several flapping rules.  This may or may
               # not be what you want.
               #
               # Current scale down rules:
