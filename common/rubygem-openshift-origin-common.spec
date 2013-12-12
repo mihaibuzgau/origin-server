@@ -9,7 +9,7 @@
 
 Summary:       Cloud Development Common
 Name:          rubygem-%{gem_name}
-Version: 1.17.2.2
+Version: 1.17.2.3
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -117,6 +117,11 @@ cp bin/man/*.8 %{buildroot}%{_mandir}/man8/
 %doc %{gem_docdir}
 
 %changelog
+* Thu Dec 12 2013 Luke Meyer <lmeyer@redhat.com> 1.17.2.3-1
+- <oo-diagnostics> detect common DNS problem early #cherrypick
+  (lmeyer@redhat.com)
+- <oo-diagnostics> handle ^C more cleanly #cherrypick (lmeyer@redhat.com)
+
 * Fri Nov 22 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.2.2-1
 - Merge remote-tracking branch 'origin/enterprise-2.0' into enterprise-2.0
   (bleanhar@redhat.com)
