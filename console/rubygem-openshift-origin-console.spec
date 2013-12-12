@@ -9,8 +9,8 @@
 
 Summary:       OpenShift Origin Management Console
 Name:          rubygem-%{gem_name}
-Version: 1.17.6
-Release:       2%{?dist}
+Version: 1.17.6.1
+Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           https://openshift.redhat.com
@@ -144,6 +144,14 @@ cp -a ./%{gem_dir}/* %{buildroot}%{gem_dir}/
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Thu Dec 12 2013 Luke Meyer <lmeyer@redhat.com> 1.17.6.1-1
+- Fix bug 1031916: Show correct gear cost tooltip #cherrypick
+  (jliggitt@redhat.com)
+
+* Thu Dec 12 2013 Luke Meyer <lmeyer@redhat.com>
+- Fix bug 1031916: Show correct gear cost tooltip #cherrypick
+  (jliggitt@redhat.com)
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.6-2
 - Fix to correctly position and size logo along with adding :hover styles
   (sgoodwin@redhat.com)
