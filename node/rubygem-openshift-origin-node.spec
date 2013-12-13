@@ -13,7 +13,7 @@
 Summary:       Cloud Development Node
 Name:          rubygem-%{gem_name}
 Version: 1.17.5
-Release:       2%{?dist}
+Release:       3%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -266,6 +266,24 @@ fi
 %attr(0755,-,-) /etc/cron.daily/openshift-origin-stale-lockfiles
 
 %changelog
+* Fri Dec 13 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.5-3
+- Bug 1035176 - openshift-iptables-port-proxy start causes duplicate rules
+  (jdetiber@redhat.com)
+- Fix up tests for ose-upgrade related changes. (jdetiber@redhat.com)
+- Bug 1036006 - oo-admin-ctl-gears *startall commands fail (jhonce@redhat.com)
+- Bug 1032950 (andy.goldstein@gmail.com)
+- v2 Upgrade consolidation - removes nasty hack from upgrader
+  (jdetiber@redhat.com)
+
+* Fri Dec 13 2013 Jason DeTiberus <jdetiber@redhat.com>
+- Bug 1035176 - openshift-iptables-port-proxy start causes duplicate rules
+  (jdetiber@redhat.com)
+- Fix up tests for ose-upgrade related changes. (jdetiber@redhat.com)
+- Bug 1036006 - oo-admin-ctl-gears *startall commands fail (jhonce@redhat.com)
+- Bug 1032950 (andy.goldstein@gmail.com)
+- v2 Upgrade consolidation - removes hack from upgrader
+  (jdetiber@redhat.com)
+
 * Wed Nov 27 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.5-2
 - allow oo-trap-user to run from non-public-key auth (markllama@gmail.com)
 
