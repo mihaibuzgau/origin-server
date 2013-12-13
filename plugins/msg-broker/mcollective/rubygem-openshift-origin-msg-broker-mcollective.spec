@@ -10,8 +10,8 @@
 
 Summary:       OpenShift plugin for mcollective service
 Name:          rubygem-%{gem_name}
-Version: 1.17.2
-Release:       2%{?dist}
+Version: 1.17.3
+Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -85,6 +85,10 @@ sed -i -e "s|\(/etc/mcollective/client.cfg\)|%{scl_root}/\1|" %{buildroot}/etc/o
 %attr(0644,-,-) %ghost %{?scl:%scl_root}/etc/mcollective/client.cfg
 
 %changelog
+* Fri Dec 13 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.3-1
+- fix bz1031821 - node exceptions are now propagated. Failed ops are also
+  mentioned in the error message (rchopra@redhat.com)
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.2-2
 - Release bump for OSE 2.0 RC1	
 
