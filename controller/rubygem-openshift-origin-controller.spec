@@ -9,8 +9,8 @@
 
 Summary:       Cloud Development Controller
 Name:          rubygem-%{gem_name}
-Version: 1.17.6
-Release:       2%{?dist}
+Version: 1.17.7
+Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -85,6 +85,12 @@ mkdir -p %{buildroot}/etc/openshift/
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Fri Dec 13 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.7-1
+- Provide a much clearer message on simple operation failures
+  (ccoleman@redhat.com)
+- fix bz1031821 - node exceptions are now propagated. Failed ops are also
+  mentioned in the error message (rchopra@redhat.com)
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.6-2
 - <tests> - Remove phpmyadmin from broker cuke test (jdetiber@redhat.com)
 - <controller> Hack cucumber tests to override $domain (jdetiber@redhat.com)
