@@ -3,7 +3,7 @@
 
 Name:          openshift-origin-cartridge-php
 Version: 1.17.3
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       Php cartridge
 Group:         Development/Languages
 License:       ASL 2.0
@@ -74,6 +74,14 @@ rm %{buildroot}%{cartridgedir}/metadata/manifest.yml.*
 
 
 %changelog
+* Fri Dec 13 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.3-3
+- Consolidate all cartridge upgrades needed for upgrading 1.2 carts
+  (jdetiber@redhat.com)
+
+* Fri Dec 13 2013 Jason DeTiberus <jdetiber@redhat.com>
+- Consolidate all cartridge upgrades needed for upgrading 1.2 carts
+  (jdetiber@redhat.com)
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.3-2
 - Removing MongoDB cartridge dependencies (jdetiber@redhat.com)
 
