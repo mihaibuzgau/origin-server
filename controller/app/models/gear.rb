@@ -112,9 +112,9 @@ class Gear
   end
 
   def publish_routing_info
-    self.port_interfaces.each { |pi|
+    self.port_interfaces.each do |pi|
       pi.publish_endpoint(self.group_instance.application)
-    }
+    end
   end
 
   def register_dns
