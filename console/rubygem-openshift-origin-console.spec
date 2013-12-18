@@ -9,7 +9,7 @@
 
 Summary:       OpenShift Origin Management Console
 Name:          rubygem-%{gem_name}
-Version: 1.17.6.1
+Version: 1.17.6.2
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -144,6 +144,12 @@ cp -a ./%{gem_dir}/* %{buildroot}%{gem_dir}/
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Wed Dec 18 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.6.2-1
+- Report warnings and errors from broker when console gets rest api server
+  error (jforrest@redhat.com)
+- Bug 1038680 - improve console's reporting of 500 errors from rest api
+  (jforrest@redhat.com)
+
 * Thu Dec 12 2013 Luke Meyer <lmeyer@redhat.com> 1.17.6.1-1
 - Fix bug 1031916: Show correct gear cost tooltip #cherrypick
   (jliggitt@redhat.com)
