@@ -16,7 +16,7 @@
 Summary:       The OpenShift Management Console
 Name:          openshift-origin-console
 Version:       1.15.1
-Release:       2%{?dist}
+Release:       3%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -253,6 +253,9 @@ _EOF
 /sbin/fixfiles -R %{?scl:%scl_prefix}mod_passenger restore
 /sbin/restorecon -R -v /var/run
 %changelog
+* Wed Dec 18 2013 Jason DeTiberus <jdetiber@redhat.com> 1.15.1-3
+- Rebuilding for new console version
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.15.1-2
 - Adding OpenShift Enterprise logo to the admin console (bleanhar@redhat.com)
 - Bug 1019486 - [OSE 2.0] The logo in the ui should say Openshift Enterrpise.
