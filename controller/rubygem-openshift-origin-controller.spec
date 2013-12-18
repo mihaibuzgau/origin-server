@@ -9,7 +9,7 @@
 
 Summary:       Cloud Development Controller
 Name:          rubygem-%{gem_name}
-Version: 1.17.7
+Version: 1.17.8
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -85,6 +85,11 @@ mkdir -p %{buildroot}/etc/openshift/
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Wed Dec 18 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.8-1
+- Report warnings and errors from broker when console gets rest api server
+  error (jforrest@redhat.com)
+- fix misnamed error_code to code (bparees@redhat.com)
+
 * Fri Dec 13 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.7-1
 - Provide a much clearer message on simple operation failures
   (ccoleman@redhat.com)
