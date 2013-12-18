@@ -9,7 +9,7 @@
 
 Summary:       Cloud Development Common
 Name:          rubygem-%{gem_name}
-Version: 1.17.2.3
+Version: 1.17.2.4
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -117,6 +117,17 @@ cp bin/man/*.8 %{buildroot}%{_mandir}/man8/
 %doc %{gem_docdir}
 
 %changelog
+* Wed Dec 18 2013 Luke Meyer <lmeyer@redhat.com> 1.17.2.4-1
+- <oo-diagnostics> fix test_broker_certificate bad grep #cherrypick
+  (lmeyer@redhat.com)
+- <oo-diagnostics> find right mco node log #cherry-pick (lmeyer@redhat.com)
+- <oo-diagnostics> rewording around broker failure #cherrypick
+  (lmeyer@redhat.com)
+- <oo-diagnostics> more reliable test_broker_certificate #cherrypick
+  (lmeyer@redhat.com)
+- <oo-diagnostics> more specific test conditions #cherrypick
+  (lmeyer@redhat.com)
+
 * Thu Dec 12 2013 Luke Meyer <lmeyer@redhat.com> 1.17.2.3-1
 - <oo-diagnostics> detect common DNS problem early #cherrypick
   (lmeyer@redhat.com)
