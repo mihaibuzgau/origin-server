@@ -9,7 +9,7 @@
 
 Summary:       Provides embedded PostgreSQL support
 Name:          openshift-origin-cartridge-postgresql
-Version: 1.17.3.2
+Version: 1.17.3.3
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
@@ -101,6 +101,9 @@ Provides PostgreSQL cartridge support to OpenShift. (Cartridge Format V2)
 %doc %{cartridgedir}/LICENSE
 
 %changelog
+* Thu Dec 19 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.3.3-1
+- Rev Postgresql cartridge version (jdetiber@redhat.com)
+
 * Thu Dec 12 2013 Luke Meyer <lmeyer@redhat.com> 1.17.3.2-1
 - Bug 1003531: An warning message should be thrown out instead of error message
   when restore a app with postgresql-8.4 (and postgresl-9.2) cartridge
