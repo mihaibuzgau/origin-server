@@ -116,6 +116,7 @@ mv %{buildroot}%{gem_instdir}/conf/* %{buildroot}/etc/openshift
 
 #move pam limit binaries to proper location
 mkdir -p %{buildroot}/usr/libexec/openshift/lib
+mv %{buildroot}%{gem_instdir}/misc/libexec/gear_upgrade_extension.rb %{buildroot}/usr/libexec/openshift
 mv %{buildroot}%{gem_instdir}/misc/libexec/lib/quota_attrs.sh %{buildroot}/usr/libexec/openshift/lib
 mv %{buildroot}%{gem_instdir}/misc/libexec/lib/archive_git_submodules.sh %{buildroot}/usr/libexec/openshift/lib
 
@@ -219,6 +220,7 @@ fi
 %attr(0755,-,-) /usr/bin/*
 %attr(0640,-,-) %ghost %{_var}/log/openshift/node/platform.log
 %attr(0640,-,-) %ghost %{_var}/log/openshift/node/platform-trace.log
+/usr/libexec/openshift/gear_upgrade_extension.rb
 /usr/libexec/openshift/lib/quota_attrs.sh
 /usr/libexec/openshift/lib/archive_git_submodules.sh
 %attr(0755,-,-) %{openshift_lib}/cartridge_sdk
