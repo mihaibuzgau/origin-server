@@ -12,8 +12,8 @@
 
 Summary:       Cloud Development Node
 Name:          rubygem-%{gem_name}
-Version: 1.17.5
-Release:       3%{?dist}
+Version: 1.17.5.2
+Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -268,6 +268,12 @@ fi
 %attr(0755,-,-) /etc/cron.daily/openshift-origin-stale-lockfiles
 
 %changelog
+* Fri Dec 20 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.5.2-1
+- <node> Add gear_upgrade_extension (jdetiber@redhat.com)
+
+* Fri Dec 20 2013 Jason DeTiberus <jdetiber@redhat.com>
+- <node> Add gear_upgrade_extension (jdetiber@redhat.com)
+
 * Fri Dec 13 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.5-3
 - Bug 1035176 - openshift-iptables-port-proxy start causes duplicate rules
   (jdetiber@redhat.com)
