@@ -12,7 +12,7 @@
 
 Summary:       Cloud Development Node
 Name:          rubygem-%{gem_name}
-Version: 1.17.5.2
+Version: 1.17.5.3
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -268,6 +268,13 @@ fi
 %attr(0755,-,-) /etc/cron.daily/openshift-origin-stale-lockfiles
 
 %changelog
+* Mon Dec 23 2013 Luke Meyer <lmeyer@redhat.com> 1.17.5.3-1
+- Prune from child gear app-deployments dir #cherrypick
+  (andy.goldstein@gmail.com)
+- Bug 1032906: Fix generic error handling in Openshift agent #cherrypick
+  (ironcladlou@gmail.com)
+- <node> Bug 1033572 #cherrypick 1033767 (andy.goldstein@gmail.com)
+
 * Fri Dec 20 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.5.2-1
 - <node> Add gear_upgrade_extension (jdetiber@redhat.com)
 
