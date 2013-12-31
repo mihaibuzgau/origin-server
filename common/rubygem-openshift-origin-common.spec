@@ -9,7 +9,7 @@
 
 Summary:       Cloud Development Common
 Name:          rubygem-%{gem_name}
-Version: 1.17.2.4
+Version: 1.17.2.5
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -117,6 +117,9 @@ cp bin/man/*.8 %{buildroot}%{_mandir}/man8/
 %doc %{gem_docdir}
 
 %changelog
+* Tue Dec 31 2013 Luke Meyer <lmeyer@redhat.com> 1.17.2.5-1
+- <oo-diagnostics> OSE version-agnostic - bug 1043340 (lmeyer@redhat.com)
+
 * Wed Dec 18 2013 Luke Meyer <lmeyer@redhat.com> 1.17.2.4-1
 - <oo-diagnostics> fix test_broker_certificate bad grep #cherrypick
   (lmeyer@redhat.com)
