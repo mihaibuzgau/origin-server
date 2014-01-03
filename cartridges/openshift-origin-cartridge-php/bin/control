@@ -38,10 +38,12 @@ function restart() {
 function stop() {
     ensure_valid_httpd_process "$HTTPD_PID_FILE" "$HTTPD_CFG_FILE"
     if [ -f "$HTTPD_PID_FILE" ]; then
-        httpd_pid=`cat "$HTTPD_PID_FILE" 2> /dev/null`
+      # If we still have a PID file, then ensure_valid_httpd_process's call to
+      # killall_httpds didn't happen.
+      httpd_pid=`cat "$HTTPD_PID_FILE" 2> /dev/null`
+      eval "/usr/sbin/httpd $HTTPD_CMD_CONF -k stop"
+      wait_for_stop $httpd_pid
     fi
-    eval "/usr/sbin/httpd $HTTPD_CMD_CONF -k stop"
-    wait_for_stop $httpd_pid
 }
 
 function configtest() {
