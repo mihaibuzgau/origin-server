@@ -21,3 +21,7 @@ if [ "${nodejs_version}" == "0.10" ]; then
         link_global_modules ${nodejs_version}
     fi
 fi
+
+if [ -e $OPENSHIFT_HOMEDIR/nodejs/metadata/jenkins_shell_command ]; then
+  rm -f $OPENSHIFT_HOMEDIR/nodejs/metadata/jenkins_shell_command
+fi
