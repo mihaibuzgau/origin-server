@@ -109,7 +109,7 @@ module OpenShift
     end
 
     def pre_cartridge_upgrade(progress, itinerary)
-      # Create OPENSHIFT_RUBY_PATH_ELEMENT if it doesn't exist, as of 2.0.30 both ruby-1.8 
+      # Create OPENSHIFT_RUBY_PATH_ELEMENT if it doesn't exist, as of 2.0.30 both ruby-1.8
       # and ruby-1.9 carts use this variable, previously it was only ruby-1.9.  Without setting
       # this variable upgraded ruby-1.8 carts will fail on git push.
       path = File.join(@gear_home, 'ruby')
@@ -338,16 +338,16 @@ module OpenShift
 
         legacy_content.each_line do |line|
           options = {}
-          parts = line.split(';')
 
-          dns = parts[1]
+          # line looks like e.g.:
+          # 52cb1968d5ce040b840000d3@10.0.0.1:php;52cb1968d5-demo.apps.ose12.example.com
+          scale, dns = line.split(';')
+          options[:uuid] = scale.split('@')[0]
           options[:dns] = dns
-          options[:uuid] = dns.split('-')[0]
-          options[:namespace] = namespace
+          gear_name = dns.split('.')[0]
+          options[:namespace] = gear_name.split('-')[1]
 
-          uuid_and_namespace = "#{options[:uuid]}-#{namespace}"
-
-          cfg_entry, _, rc = ::OpenShift::Runtime::Utils.oo_spawn("grep #{uuid_and_namespace} #{haproxy_cfg}")
+          cfg_entry, _, rc = ::OpenShift::Runtime::Utils.oo_spawn("grep #{gear_name} #{haproxy_cfg}")
 
           if rc == 0
             proxy_host_and_port = cfg_entry.split(' ')[2]
@@ -357,7 +357,7 @@ module OpenShift
 
             platform_registry.add(options)
           else
-            progress.log "Unable to locate #{uuid_and_namespace} in #{haproxy_cfg}, skipping."
+            progress.log "Unable to locate #{gear_name} in #{haproxy_cfg}, skipping."
           end
         end
 
