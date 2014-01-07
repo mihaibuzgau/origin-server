@@ -7,7 +7,7 @@
 
 Summary:       Utility scripts for the OpenShift Origin broker
 Name:          openshift-origin-broker-util
-Version: 1.17.6
+Version: 1.17.6.1
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
@@ -93,6 +93,9 @@ cp -p man/*.8 %{buildroot}%{_mandir}/man8/
 %{_mandir}/man8/oo-stats.8.gz
 
 %changelog
+* Tue Jan 07 2014 Luke Meyer <lmeyer@redhat.com> 1.17.6.1-1
+- Add update-cluster to oo-admin-ctl-app (andy.goldstein@gmail.com)
+
 * Fri Dec 13 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.6-1
 - <oo-admin-upgrade> Consolidate 2.0 upgrade, remove need for custom ose-
   upgrade-gears (jdetiber@redhat.com)
