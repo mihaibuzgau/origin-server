@@ -6,8 +6,8 @@
 
 Summary:       Provides HA Proxy
 Name:          openshift-origin-cartridge-haproxy
-Version: 1.17.3
-Release:       3%{?dist}
+Version: 1.17.3.1
+Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -46,6 +46,9 @@ HAProxy cartridge for OpenShift. (Cartridge Format V2)
 %doc %{cartridgedir}/LICENSE
 
 %changelog
+* Tue Jan 07 2014 Luke Meyer <lmeyer@redhat.com> 1.17.3.1-1
+- Bump version to make errata tool happy
+
 * Fri Dec 13 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.3-3
 - Consolidate all cartridge upgrades needed for upgrading 1.2 carts
   (jdetiber@redhat.com)
