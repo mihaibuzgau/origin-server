@@ -2,8 +2,8 @@
 %global frameworkdir %{_libexecdir}/openshift/cartridges/php
 
 Name:          openshift-origin-cartridge-php
-Version: 1.17.3
-Release:       3%{?dist}
+Version: 1.17.3.1
+Release:       1%{?dist}
 Summary:       Php cartridge
 Group:         Development/Languages
 License:       ASL 2.0
@@ -74,6 +74,9 @@ rm %{buildroot}%{cartridgedir}/metadata/manifest.yml.*
 
 
 %changelog
+* Tue Jan 07 2014 Luke Meyer <lmeyer@redhat.com> 1.17.3.1-1
+- bump version to make errata tool happy
+
 * Fri Dec 13 2013 Jason DeTiberus <jdetiber@redhat.com> 1.17.3-3
 - Consolidate all cartridge upgrades needed for upgrading 1.2 carts
   (jdetiber@redhat.com)
