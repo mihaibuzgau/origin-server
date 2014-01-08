@@ -50,7 +50,7 @@ class ApplicationsController < BaseController
     app_name = params[:name].downcase if params[:name].presence
     features = []
     downloaded_cart_urls = []
-    gear_size_map = {}
+      gear_size_map = {}
     default_gear_size = params[:gear_size].presence || params[:gear_profile].presence || Rails.application.config.openshift[:default_gear_size]
     default_gear_size.downcase! if default_gear_size
     cart_params = [(params[:cartridges].presence || params[:cartridge].presence)].flatten
