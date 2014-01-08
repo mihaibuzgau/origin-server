@@ -9,8 +9,8 @@
 
 Summary:       OpenShift plugin for publishing routing information on ActiveMQ
 Name:          rubygem-%{gem_name}
-Version: 0.2.1
-Release:       2%{?dist}
+Version: 0.2.2
+Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://openshift.redhat.com
@@ -72,6 +72,9 @@ cp conf/openshift-origin-routing-activemq.conf.example %{buildroot}/etc/openshif
 /etc/openshift/plugins.d/openshift-origin-routing-activemq.conf.example
 
 %changelog
+* Wed Jan 08 2014 Brenton Leanhardt <bleanhar@redhat.com> 0.2.2-1
+- Route changes (ccoleman@redhat.com)
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 0.2.1-2
 - Release bump for OSE 2.0 RC1
 
