@@ -2,8 +2,8 @@
 
 Summary:       Provides JBossEWS2.0 support
 Name:          openshift-origin-cartridge-jbossews
-Version: 1.17.1
-Release:       2%{?dist}
+Version: 1.17.2
+Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -75,6 +75,10 @@ alternatives --set jbossews-2.0 /usr/share/tomcat7
 %doc %{cartridgedir}/LICENSE
 
 %changelog
+* Tue Jan 07 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.17.2-1
+- Bug 1033581, Bug 1034356 - Adding upgrade logic to remove the unneeded
+  jenkins_shell_command files (bleanhar@redhat.com)
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.1-2
 - Release bump for OSE 2.0 RC1
 

@@ -1,8 +1,8 @@
 %global cartridgedir %{_libexecdir}/openshift/cartridges/perl
 
 Name:          openshift-origin-cartridge-perl
-Version: 1.16.4
-Release:       2%{?dist}
+Version: 1.16.5
+Release:       1%{?dist}
 Summary:       Perl cartridge
 Group:         Development/Languages
 License:       ASL 2.0
@@ -71,6 +71,10 @@ rm %{buildroot}%{cartridgedir}/metadata/manifest.yml.*
 
 
 %changelog
+* Tue Jan 07 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.16.5-1
+- Bug 1033581, Bug 1034356 - Adding upgrade logic to remove the unneeded
+  jenkins_shell_command files (bleanhar@redhat.com)
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.16.4-2
 - Removing MongoDB cartridge dependencies (jdetiber@redhat.com)
 

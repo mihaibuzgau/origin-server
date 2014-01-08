@@ -5,3 +5,7 @@ source $OPENSHIFT_CARTRIDGE_SDK_BASH
 jboss_version="$1"
 old_cart_version="$2"
 new_cart_version="$3"
+
+if [ -e $OPENSHIFT_HOMEDIR/jbossews/metadata/jenkins_shell_command ]; then
+  rm -f $OPENSHIFT_HOMEDIR/jbossews/metadata/jenkins_shell_command
+fi
