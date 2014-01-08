@@ -2,7 +2,7 @@
 %global frameworkdir %{_libexecdir}/openshift/cartridges/php
 
 Name:          openshift-origin-cartridge-php
-Version: 1.17.3.1
+Version: 1.17.3.2
 Release:       1%{?dist}
 Summary:       Php cartridge
 Group:         Development/Languages
@@ -74,6 +74,10 @@ rm %{buildroot}%{cartridgedir}/metadata/manifest.yml.*
 
 
 %changelog
+* Tue Jan 07 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.17.3.2-1
+- Bug 1033581, Bug 1034356 - Adding upgrade logic to remove the unneeded
+  jenkins_shell_command files (bleanhar@redhat.com)
+
 * Tue Jan 07 2014 Luke Meyer <lmeyer@redhat.com> 1.17.3.1-1
 - bump version to make errata tool happy
 
