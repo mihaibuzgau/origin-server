@@ -23,9 +23,24 @@ class HAProxyAttr
 end
 
 class Haproxy
-    MAX_SESSIONS_PER_GEAR = 16.0
+    #
+    # MAX_SESSIONS_PER_GEAR = 16.0 (default)
+    #
+    # Sessions per gear is the primary control for determining how much traffic
+    # an individual gear can handle.  It is highly likely users will want to
+    # tune this up and down.  If your backend is doing small and fast jobs like
+    # might be the case for a caching service (varnish), you may want to
+    # increase this number.  If the backend process is doing heavy processing
+    # and likely takes a while, you may want to lower this number.
+    #
+    # Note: This doesn't control how many requests go to a backend gear, this
+    # simply tells haproxy_ctld.rb how many connections per gear we are
+    # targeting so it can scale up and down to match that ratio.
+    #
+    MAX_SESSIONS_PER_GEAR = ENV['OPENSHIFT_MAX_SESSIONS_PER_GEAR'] ? ENV['OPENSHIFT_MAX_SESSIONS_PER_GEAR'].to_f : 16.0
+    MOVING_AVERAGE_SAMPLE_SIZE = 10
 
-    attr_accessor :gear_count, :sessions, :sessions_per_gear, :session_capacity_pct, :gear_namespace, :last_scale_up_time, :last_scale_error_time
+    attr_accessor :gear_count, :sessions, :sessions_per_gear, :session_capacity_pct, :gear_namespace, :last_scale_up_time, :last_scale_error_time, :previous_stats, :stats, :previous_remote_sessions_counts
 
     class ShouldRetry < StandardError
       attr_reader :message
@@ -51,6 +66,8 @@ class Haproxy
     end
 
     def initialize(stats_sock="#{HAPROXY_RUN_DIR}/stats", log_debug=nil)
+        @previous_stats = []
+        @previous_remote_sessions_counts = {}
         @stats_sock=stats_sock
 
         @log = Logger.new("#{ENV['OPENSHIFT_HAPROXY_LOG_DIR']}/scale_events.log")
@@ -61,6 +78,8 @@ class Haproxy
         end
 
         @last_scale_up_time=Time.now
+        # remove_count_threshold defines how long @session_gear_pct must be
+        # below @remove_gear_pct.
         @remove_count_threshold = 20
         @remove_count = 0
         self.populate_status_urls
@@ -84,6 +103,12 @@ class Haproxy
         end
 
         num_sessions = status['express']['BACKEND'].scur.to_i
+        previous_remote_sessions_counts[status_url] = [] unless previous_remote_sessions_counts[status_url]
+        prsc = previous_remote_sessions_counts[status_url]
+        prsc << num_sessions
+        prsc.delete_at(0) if prsc.length > MOVING_AVERAGE_SAMPLE_SIZE
+        moving_avg_num_sessions = (prsc.reduce(:+).to_f / prsc.length).to_i
+        moving_avg_num_sessions
       rescue => ex
         @log.error("Failed to get stats from #{status_url}")
         @log.debug(ex.backtrace)
@@ -95,7 +120,9 @@ class Haproxy
 
         @gear_namespace = ENV['OPENSHIFT_GEAR_DNS'].split('.')[0].split('-')[1]
 
-        @status={}
+        @previous_stats << @stats if @stats
+        @previous_stats.delete_at(0) if @previous_stats.length > MOVING_AVERAGE_SAMPLE_SIZE
+        @stats = {}
 
         begin
           @socket = UNIXSocket.open(@stats_sock)
@@ -103,8 +130,8 @@ class Haproxy
           while(line = @socket.gets) do
             pxname=line.split(',')[0]
             svname=line.split(',')[1]
-            @status[pxname] = {} unless @status[pxname]
-            @status[pxname][svname] = HAProxyAttr.new(line)
+            @stats[pxname] = {} unless @stats[pxname]
+            @stats[pxname][svname] = HAProxyAttr.new(line)
           end
           @socket.close
         rescue Errno::ENOENT => e
@@ -120,7 +147,7 @@ class Haproxy
         else
           @gear_remove_pct = 1.0
         end
-        @sessions = self.stats['express']['BACKEND'].scur.to_i
+        @sessions = num_sessions('express', 'BACKEND')
         if @gear_count == 0
           @log.error("Failed to get information from haproxy")
           raise ShouldRetry, "Failed to get information from haproxy"
@@ -140,6 +167,21 @@ class Haproxy
         @log.debug("Got stats from #{num_remote_proxies} remote proxies.")
         @sessions_per_gear = @sessions.to_f / @gear_count
         @session_capacity_pct = (@sessions_per_gear / MAX_SESSIONS_PER_GEAR ) * 100
+    end
+
+    def num_sessions(pvname, svname)
+      num = 0
+      count = 1
+      if stats && stats[pvname] && stats[pvname][svname]
+        num += stats[pvname][svname].scur.to_i
+        previous_stats.each do |s|
+          if s[pvname] && s[pvname][svname]
+            num += s[pvname][svname].scur.to_i
+            count += 1
+          end
+        end
+      end
+      (num.to_f / count).to_i
     end
 
     def last_scale_up_time_seconds
@@ -280,14 +322,6 @@ class Haproxy
         end
       end
       return min, max
-    end
-
-    def stats()
-        @status
-    end
-
-    def scur()
-        @scur
     end
 
 end
