@@ -7,7 +7,16 @@ require 'net/http'
 
 @check_interval=5
 
-CONFIG_VALIDATION_CHECK_INTERVAL = 300
+#
+# FLAP_PROTECTION_TIME_SECONDS = 600 (default)
+#
+# Flap protection is an important setting for dealing with scale up and down
+# events.  Constantly scaling up and down is not an attractive behavior and
+# FLAP_PROTECTION_TIME_SECONDS is the amount of time (in seconds) required
+# to pass after a scale up event has happened but before a scale down event
+# occurs.  In other words, if a scale up event has happened, don't issue
+# a scale down event until after 600 seconds has elapsed
+#
 FLAP_PROTECTION_TIME_SECONDS = 600
 HAPROXY_CONF_DIR=File.join(ENV['OPENSHIFT_HAPROXY_DIR'], "conf")
 HAPROXY_RUN_DIR=File.join(ENV['OPENSHIFT_HAPROXY_DIR'], "run")
@@ -40,7 +49,7 @@ class Haproxy
     MAX_SESSIONS_PER_GEAR = ENV['OPENSHIFT_MAX_SESSIONS_PER_GEAR'] ? ENV['OPENSHIFT_MAX_SESSIONS_PER_GEAR'].to_f : 16.0
     MOVING_AVERAGE_SAMPLE_SIZE = 10
 
-    attr_accessor :gear_count, :sessions, :sessions_per_gear, :session_capacity_pct, :gear_namespace, :last_scale_up_time, :last_scale_error_time, :previous_stats, :stats, :previous_remote_sessions_counts
+    attr_accessor :gear_count, :sessions, :sessions_per_gear, :session_capacity_pct, :gear_namespace, :last_scale_up_time, :last_scale_error_time, :previous_stats, :status_urls_config_mtime, :stats, :previous_remote_sessions_counts
 
     class ShouldRetry < StandardError
       attr_reader :message
@@ -52,15 +61,22 @@ class Haproxy
       end
     end
 
-    def populate_status_urls
+
+    def populate_status_urls(check_mtime=false)
       @status_urls = []
       if File.exist?(HAPROXY_STATUS_URLS_CONFIG)
+        mt = File.mtime(HAPROXY_STATUS_URLS_CONFIG)
+        previous_status_urls_config_mtime = status_urls_config_mtime
+        status_urls_config_mtime = mt
+        if check_mtime && previous_status_urls_config_mtime
+          return unless mt > previous_status_urls_config_mtime
+        end
         begin
           File.open(HAPROXY_STATUS_URLS_CONFIG, "r").each_line do |surl|
             @status_urls << surl.strip
           end
         rescue => ex
-          @@log.error(ex.backtrace)
+          @log.error(ex.backtrace)
         end
       end
     end
@@ -69,6 +85,7 @@ class Haproxy
         @previous_stats = []
         @previous_remote_sessions_counts = {}
         @stats_sock=stats_sock
+        @gear_namespace = ENV['OPENSHIFT_GEAR_DNS'].split('.')[0].split('-')[1]
 
         @log = Logger.new("#{ENV['OPENSHIFT_HAPROXY_LOG_DIR']}/scale_events.log")
         if log_debug
@@ -117,9 +134,7 @@ class Haproxy
     end
 
     def refresh(stats_sock="#{HAPROXY_RUN_DIR}/stats")
-
-        @gear_namespace = ENV['OPENSHIFT_GEAR_DNS'].split('.')[0].split('-')[1]
-
+        populate_status_urls(true)
         @previous_stats << @stats if @stats
         @previous_stats.delete_at(0) if @previous_stats.length > MOVING_AVERAGE_SAMPLE_SIZE
         @stats = {}
@@ -191,7 +206,7 @@ class Haproxy
 
     def last_scale_error_time_seconds
         if last_scale_error_time
-          seconds = Time.now - @last_scale_error_time
+          seconds = Time.now - last_scale_error_time
           seconds.to_i
         else
           0
@@ -203,34 +218,35 @@ class Haproxy
         seconds.to_i
     end
 
-    def add_gear(verbose=false)
+    def add_gear(debug=false)
         @last_scale_up_time = Time.now
-        @log.info("GEAR_UP - capacity: #{self.session_capacity_pct}% gear_count: #{self.gear_count} sessions: #{self.sessions} up_thresh: #{@gear_up_pct}%")
-        res=`#{ENV['OPENSHIFT_HAPROXY_DIR']}/usr/bin/add-gear -n #{self.gear_namespace}  -a #{ENV['OPENSHIFT_APP_NAME']} -u #{ENV['OPENSHIFT_GEAR_UUID']} 2>&1`
-        exit_code = $?.exitstatus
-        @log.info("GEAR_UP - add-gear: exit: #{exit_code}  stdout: #{res}")
-        if exit_code != 0
-          @last_scale_error_time = Time.now
-        else
-          @last_scale_error_time = nil
-        end
-        $stderr.puts(res) if verbose and !res.empty?
+        @log.info("add-gear - capacity: #{self.session_capacity_pct}% gear_count: #{self.gear_count} sessions: #{self.sessions} up_thresh: #{@gear_up_pct}%")
+        gear_scale('add-gear', debug)
         self.print_gear_stats
     end
 
-    def remove_gear(verbose=false)
-        @log.info("GEAR_DOWN - capacity: #{self.session_capacity_pct}% gear_count: #{self.gear_count} sessions: #{self.sessions} remove_thresh: #{@gear_remove_pct}%")
-        res=`#{ENV['OPENSHIFT_HAPROXY_DIR']}/usr/bin/remove-gear -n #{self.gear_namespace} -a #{ENV['OPENSHIFT_APP_NAME']} -u #{ENV['OPENSHIFT_GEAR_UUID']} 2>&1`
+    def remove_gear(debug=false)
+        @log.info("remove-gear - capacity: #{self.session_capacity_pct}% gear_count: #{self.gear_count} sessions: #{self.sessions} remove_thresh: #{@gear_remove_pct}%")
+        gear_scale('remove-gear', debug)
+        self.print_gear_stats
+    end
+
+    def gear_scale(action, debug)
+      begin
+        res=`#{ENV['OPENSHIFT_HAPROXY_DIR']}/usr/bin/#{action} -n #{self.gear_namespace} -a #{ENV['OPENSHIFT_APP_NAME']} -u #{ENV['OPENSHIFT_GEAR_UUID']} 2>&1`
         exit_code = $?.exitstatus
-        @log.info("GEAR_DOWN - remove-gear: exit: #{exit_code}  stdout: #{res}")
+        @log.info("#{action} - exit_code: #{exit_code}  output: #{res}")
         if exit_code != 0
           @last_scale_error_time = Time.now
         else
           @last_scale_error_time = nil
         end
-        $stderr.puts(res) if verbose and !res.empty?
         self.populate_status_urls
-        self.print_gear_stats
+      rescue Exception => e
+        @log.info("#{action} failure: #{e.message}")
+        @log.info e.backtrace.join('\n') if debug
+        @last_scale_error_time = Time.now
+      end
     end
 
     def print_gear_stats
@@ -243,6 +259,39 @@ class Haproxy
         @log.debug("GEAR_INFO - capacity: #{session_capacity_pct}% gear_count: #{gear_count} sessions: #{sessions} up/remove_thresh: #{@gear_up_pct}%/#{@gear_remove_pct}% sec_left_til_remove: #{seconds_left} gear_remove_thresh: #{@remove_count}/#{@remove_count_threshold}")
     end
 
+
+    #
+    # Does a capacity check and issues scale up and down events.
+    #
+    # This is the primary area users will want to customize.  It's heavily 
+    # targeted towards haproxy capacity today so feel free to gut and customize
+    # as required.
+    #
+    # This gets called every 5 seconds (by default, determined by
+    # check_interval defined above).
+    #
+    # Variables currently being used:
+    #
+    #   * @session_capcity_pct (determines how full current capacity is using
+    #                          defined in "refresh" above).  100% full means
+    #                          that all gears have all MAX_SESSIONS_PER_GEAR
+    #                          or higher usage).  Though this number could be
+    #                          higher than 100% in times of high load.  This
+    #                          number will change up and down as more or fewer
+    #                          people visit your site.
+    #   * @gear_up_pct - Determines the level where @session_capacity_pct will
+    #                    trigger a gear up event.
+    #   * @gear_remove_pct - Determines the level where @session_capacity_pct
+    #                        will issue a gear down event.
+    #   * @gear_count - The number of gears currently defined in haproxy
+    #   * @last_scale_up_time_seconds - How long it's been since we last scaled
+    #                                   up.  Used for flap prevention
+    #   * @remove_count - Number of consecutive remove_gear requests
+    #   * @remove_count_threshold - The number of checks in a row where
+    #                               @session_capacity_pct must be below
+    #                               @gear_remove_pct before self.remove_gear
+    #                               will be called.
+    #
     def check_capacity(debug=nil)
         # check_capacity tracks the following information for determining whether
         # or not to increase or decrease a gear
@@ -264,7 +313,42 @@ class Haproxy
         if lsets == 0 || lsets > FLAP_PROTECTION_TIME_SECONDS
           min, max = get_scaling_limits
 
-          # If active capacity is greater then gear_up pct. Add a gear
+          #
+          # Check to see if @session_capacity_pct is greater than or equal to
+          # @gear_up_pct.  If it is, issue a gear up event and log it.  Then
+          # return back to the checker program.
+          #
+          # This would be one of the first areas that could be completely
+          # removed or customized.  For example, users that wanted to scale up
+          # when memory on a remote gear was high could do something like the
+          # pseudo code below:
+          #
+          # for gear_dns in gear_list
+          #     mem_usage = `ssh -i ~/.openshift_ssh/id_rsa/$UUID@$gear_dns 'oo-cgroup-read memory.memsw.usage_in_bytes'`
+          #     self.add_gear if mem_usage >= 10000000
+          # end
+          #
+          # Or in another example, we could track CPU deltas using cgroups.
+          # This would require storing current and previous cpu to generate a
+          # delta.  Again, more pseudo code.
+          #
+          # for gear_dns in gear_list
+          #     current_cpu_usage = `ssh -i ~/.openshift_ssh/id_rsa/$UUID@$gear_dns 'oo-cgroup-read cpuacct.usage'`
+          #     cpu_delta = current_cpu_usage - previous_cpu_usage
+          #     self.add_gear if cpu_delta >= 152504356
+          # end
+          #
+          # Another option is to create a tester script that you want to finish
+          # in a certain time.  If it's slower than expected, scale up.  Be
+          # careful not to create a heisenberg script (IE: a script that might
+          # change the performance of the gear simply by running it).  This can
+          # happen when doing a lot of compute.
+          #
+          # for gear_dns in gear_list
+          #     time_threshold = 2 # seconds
+          #     test_script_time = `ssh -i ~/.openshift_ssh/id_rsa/$UUID@$gear_dns 'my_test_script.sh'`
+          #     self.add_gear if time_test_script > time_threshold
+          # end
           if @session_capacity_pct >= @gear_up_pct
               @remove_count = 0
               if @gear_count < max or max < 0
@@ -371,31 +455,33 @@ rescue Exception => e
   p_usage(255)
 end
 
+data_dir = ENV['OPENSHIFT_DATA_DIR']
+scale_file = "#{data_dir}/scale_limits.txt"
+File.delete(scale_file) if File.exists?(scale_file)
 
-begin
-  data_dir = ENV['OPENSHIFT_DATA_DIR']
-  scale_file = "#{data_dir}/scale_limits.txt"
-  File.delete(scale_file) if File.exists?(scale_file)
-  ha = Haproxy.new("#{HAPROXY_RUN_DIR}/stats", opt['debug'])
-  if opt['up']
-    ha.add_gear(true)
-    exit 0
-  elsif opt['down']
-    ha.remove_gear(true)
-    exit 0
+if opt['up'] || opt['down']
+  begin
+    ha = Haproxy.new("#{HAPROXY_RUN_DIR}/stats", opt['debug'])
+    if opt['up']
+      ha.add_gear(opt['debug'])
+      exit 0
+    elsif opt['down']
+      ha.remove_gear(opt['debug'])
+      exit 0
+    end
+  rescue Haproxy::ShouldRetry => e
+    puts e
+    exit 1
   end
-rescue Haproxy::ShouldRetry => e
-  puts e
-  exit 1
-end
-
-last_cfg_check_time=0
-while true
+else
+  while true
     begin
+      ha = Haproxy.new("#{HAPROXY_RUN_DIR}/stats", opt['debug']) unless ha
       ha.refresh()
       ha.check_capacity(opt['debug'])
     rescue Haproxy::ShouldRetry => e
       # Already logged when the exception was generated
     end
     sleep @check_interval
+  end
 end
