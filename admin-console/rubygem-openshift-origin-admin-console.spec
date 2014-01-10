@@ -9,8 +9,8 @@
 
 Summary:       OpenShift plugin adding an administrative console to the broker
 Name:          rubygem-%{gem_name}
-Version: 1.16.3
-Release:       2%{?dist}
+Version: 1.16.3.1
+Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -129,6 +129,9 @@ cp %{buildroot}/%{gem_dir}/gems/%{gem_name}-%{version}/conf/openshift-origin-adm
 %defattr(-,root,apache,-)
 
 %changelog
+* Fri Jan 10 2014 Luke Meyer <lmeyer@redhat.com> 1.16.3.1-1
+- Changed a binary, must bump version for tito to build
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.16.3-2
 - Adding OpenShift Enterprise logo to the admin console (bleanhar@redhat.com)
 
