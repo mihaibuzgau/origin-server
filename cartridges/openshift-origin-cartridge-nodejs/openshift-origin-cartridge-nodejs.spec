@@ -9,8 +9,8 @@
 
 Summary:       Provides Node.js support
 Name:          openshift-origin-cartridge-nodejs
-Version: 1.18.1
-Release:       2%{?dist}
+Version: 1.18.1.1
+Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -73,6 +73,11 @@ Provides Node.js support to OpenShift. (Cartridge Format V2)
 %doc %{cartridgedir}/LICENSE
 
 %changelog
+* Fri Jan 10 2014 Luke Meyer <lmeyer@redhat.com> 1.18.1.1-1
+- Bumping version because release patch cannot create/delete symlinks.
+- Bug 1033581, Bug 1034356 - Adding upgrade logic to remove the unneeded
+  jenkins_shell_command files (bleanhar@redhat.com)
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.18.1-2
 - Remove unsupported versions from cartridges (jdetiber@redhat.com)
 
