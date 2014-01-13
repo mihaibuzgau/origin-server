@@ -1,7 +1,7 @@
 %global cartridgedir %{_libexecdir}/openshift/cartridges/perl
 
 Name:          openshift-origin-cartridge-perl
-Version: 1.16.5
+Version: 1.16.6
 Release:       1%{?dist}
 Summary:       Perl cartridge
 Group:         Development/Languages
@@ -71,6 +71,10 @@ rm %{buildroot}%{cartridgedir}/metadata/manifest.yml.*
 
 
 %changelog
+* Mon Jan 13 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.16.6-1
+- Bug 1032901, Bug 1047440 - Removed perl5lib folder from GIT and added to
+  dependency_dirs (mfojtik@redhat.com)
+
 * Tue Jan 07 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.16.5-1
 - Bug 1033581, Bug 1034356 - Adding upgrade logic to remove the unneeded
   jenkins_shell_command files (bleanhar@redhat.com)
