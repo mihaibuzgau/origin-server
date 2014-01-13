@@ -12,7 +12,7 @@
 
 Summary:       Cloud Development Node
 Name:          rubygem-%{gem_name}
-Version: 1.17.5.4
+Version: 1.17.5.5
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -268,6 +268,10 @@ fi
 %attr(0755,-,-) /etc/cron.daily/openshift-origin-stale-lockfiles
 
 %changelog
+* Mon Jan 13 2014 Luke Meyer <lmeyer@redhat.com> 1.17.5.5-1
+- Fix viminfo file error when using vim within gears #cherrypick
+  (jhadvig@redhat.com)
+
 * Tue Jan 07 2014 Luke Meyer <lmeyer@redhat.com> 1.17.5.4-1
 - <gear_upgrade_extension> gear registry bug 1034967 #noupstream
   (lmeyer@redhat.com)
