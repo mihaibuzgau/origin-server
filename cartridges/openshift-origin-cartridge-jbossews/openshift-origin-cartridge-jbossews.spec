@@ -2,7 +2,7 @@
 
 Summary:       Provides JBossEWS2.0 support
 Name:          openshift-origin-cartridge-jbossews
-Version: 1.17.2
+Version: 1.17.2.1
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -75,6 +75,16 @@ alternatives --set jbossews-2.0 /usr/share/tomcat7
 %doc %{cartridgedir}/LICENSE
 
 %changelog
+* Tue Jan 14 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.17.2.1-1
+- Bug 1033144, Bug 1033146: Allow MAVEN_ARGS overriding in jbossews builds
+  (ironcladlou@gmail.com)
+- Automatic commit of package [openshift-origin-cartridge-jbossews] release
+  [1.17.2-1]. (bleanhar@redhat.com)
+- Bug 1033581, Bug 1034356 - Adding upgrade logic to remove the unneeded
+  jenkins_shell_command files (bleanhar@redhat.com)
+- Automatic commit of package [openshift-origin-cartridge-jbossews] release
+  [1.17.1-2]. (bleanhar@redhat.com)
+
 * Tue Jan 07 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.17.2-1
 - Bug 1033581, Bug 1034356 - Adding upgrade logic to remove the unneeded
   jenkins_shell_command files (bleanhar@redhat.com)
