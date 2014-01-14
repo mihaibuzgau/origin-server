@@ -9,7 +9,7 @@
 
 Summary:       Cloud Development Controller
 Name:          rubygem-%{gem_name}
-Version: 1.17.9
+Version: 1.17.10
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -85,6 +85,10 @@ mkdir -p %{buildroot}/etc/openshift/
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Tue Jan 14 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.17.10-1
+- <oo-admin-ctl-user> Add --logins-file, --create, and --quiet
+  (jliggitt@redhat.com)
+
 * Wed Jan 08 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.17.9-1
 - Route changes (ccoleman@redhat.com)
 
