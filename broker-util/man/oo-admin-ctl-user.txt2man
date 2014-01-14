@@ -2,15 +2,19 @@ NAME
   oo-admin-ctl-user
   
 SYNOPSIS
-  oo-admin-ctl-user [-h|--help] [-l|--login login_name] 
+  oo-admin-ctl-user [-l|--login login_name] [-f|--logins-file file_name]
+  [--create] [-q|--quiet]
   [--setmaxgears max_gears] [--setconsumedgears consumed_gears]
+  [--setmaxdomains max_domains]
   [--setmaxuntrackedstorage max_untracked_storage]
   [--setmaxtrackedstorage max_tracked_storage]
   [--listsubaccounts] [--addsubaccount subaccount_login]
   [--removesubaccount subaccount_login] [--allowsubaccounts true|false]
   [--addgearsize gear_size] [--removegearsize gear_size]
   [--inheritgearsizes true|false] [--allowha true|false]
-  [--allowprivatesslcertificates true|false]
+  [--allowprivatesslcertificates true|false] [--allowplanupgrade true|false]
+
+  oo-admin-ctl-user [-h|--help] 
 
 DESCRIPTION
   Utility to manage users within OpenShift Origin.
@@ -20,10 +24,22 @@ OPTIONS
     Display a simple help dialog.
 
   -l|--login login_name  
-    Login with OpenShift access. Required.
+    Login with OpenShift access. Required unless --logins-file is specified.
+
+  -f|--logins-file <file>
+    File containing one login per line (use instead of --login argument)
+
+  -q|--quiet
+    Suppress non-error output.
+
+  -c|--create
+    Create the specified user(s) if they do not already exist.
 
   --setmaxgears max_gears  
     Set the maximum number of gears a user is allowed to consume.
+
+  --setmaxdomains max_domains
+    Set the maximum number of domains a user is allowed to consume.
 
   --setconsumedgears consumed_gears  
     Set the number of gears a user has consumed. Use with caution.
@@ -36,13 +52,15 @@ OPTIONS
  
   --listsubaccounts  
     List the subaccounts that have been created under this parent account.
-    (login)
+    Cannot use this option with --quiet.
 
   --addsubaccount subaccount_login  
     The subaccount account name to add to the login parent account.
+    Cannot use this option when multiple logins are specified.
 
   --removesubaccount subaccount_login  
     The subaccount account name to remove from the login parent account.
+    Cannot use this option when multiple logins are specified.
 
   --allowsubaccounts true|false  
     Add or Remove the capability to manage/maintain subaccounts.
@@ -63,6 +81,9 @@ OPTIONS
   --allowprivatesslcertificates true|false  
     Add / Remove the capability to add private SSL certificates.
 
+  --allowplanupgrade true|false  
+    Add / Remove the capability to upgrade plan for this login user account.
+
 EXAMPLE
 
   List the current user settings with:
@@ -75,8 +96,8 @@ EXAMPLE
 
 WARNINGS
   
-  Cloud SDK currently has an odd behavior that makes this script somewhat 
-  dangerous. DO NOT USE THIS SCRIPT TO MODIFY A LOT OF USERS AT ONCE!
+  When modifying multiple users, use the -f option to provide multiple logins
+  at once, rather than invoking the script multiple times.
 
 SEE ALSO
   oo-admin-ctl-district(8), oo-admin-move(8),
