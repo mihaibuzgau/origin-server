@@ -16,8 +16,8 @@
 
 Summary:       OpenShift Origin broker components
 Name:          openshift-origin-broker
-Version:       1.15.1
-Release:       2%{?dist}
+Version:       1.15.2
+Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -277,6 +277,10 @@ chcon -R -t httpd_var_run_t %{brokerdir}/httpd/run
 /sbin/restorecon -R -v /var/run
 
 %changelog
+* Tue Jan 14 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.15.2-1
+- <oo-admin-ctl-user> Add --logins-file, --create, and --quiet
+  (jliggitt@redhat.com)
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.15.1-2
 - Release bump for OSE 2.0 RC1
 * Fri Sep 13 2013 Troy Dawson <tdawson@redhat.com> 1.15.1-1
