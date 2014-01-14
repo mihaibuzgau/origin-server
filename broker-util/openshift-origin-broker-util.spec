@@ -7,7 +7,7 @@
 
 Summary:       Utility scripts for the OpenShift Origin broker
 Name:          openshift-origin-broker-util
-Version: 1.17.6.1
+Version: 1.17.6.2
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
@@ -93,6 +93,12 @@ cp -p man/*.8 %{buildroot}%{_mandir}/man8/
 %{_mandir}/man8/oo-stats.8.gz
 
 %changelog
+* Tue Jan 14 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.17.6.2-1
+- <oo-admin-ctl-user> Add --logins-file, --create, and --quiet
+  (jliggitt@redhat.com)
+- Bug 1035984 - Updated oo-admin-ctl-user man pages with
+  setmaxdomains/allowplanupgrade options (rpenta@redhat.com)
+
 * Tue Jan 07 2014 Luke Meyer <lmeyer@redhat.com> 1.17.6.1-1
 - Add update-cluster to oo-admin-ctl-app (andy.goldstein@gmail.com)
 
