@@ -15,7 +15,7 @@
 
 Summary:       The OpenShift Management Console
 Name:          openshift-origin-console
-Version:       1.15.1.1
+Version:       1.15.1.2
 Release:       2%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
@@ -253,6 +253,9 @@ _EOF
 /sbin/fixfiles -R %{?scl:%scl_prefix}mod_passenger restore
 /sbin/restorecon -R -v /var/run
 %changelog
+* Tue Jan 14 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.15.1.2-2
+- Rebuild for new console rubygem
+
 * Fri Jan 10 2014 Chris Alfonso <calfonso@redhat.com> 1.15.1.1-2
 - BZ1038558 - Error message of creating invalid domain should be highlighted
   (calfonso@redhat.com)
