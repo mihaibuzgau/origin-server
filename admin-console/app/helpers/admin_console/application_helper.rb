@@ -3,7 +3,7 @@ module AdminConsole
     include AdminConsole::Html5BoilerplateHelper
 
     def product_title
-      'OpenShift Origin'
+      'OpenShift Enterprise'
     end
 
     def gear_group_cartridges(app, group_instance)
