@@ -1,8 +1,8 @@
 %global cartridgedir %{_libexecdir}/openshift/cartridges/python
 
 Name:          openshift-origin-cartridge-python
-Version: 1.17.6
-Release:       2%{?dist}
+Version: 1.17.7
+Release:       1%{?dist}
 Summary:       Python cartridge
 Group:         Development/Languages
 License:       ASL 2.0
@@ -111,6 +111,9 @@ Python cartridge for OpenShift. (Cartridge Format V2)
 %doc %{cartridgedir}/LICENSE
 
 %changelog
+* Thu Jan 16 2014 dobbymoodge <jolamb@redhat.com> 1.17.7-1
+- Bug 1032920 - Remove python-3.3-community related files (jdetiber@redhat.com)
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.6-2
 - Remove unsupported versions from cartridges (jdetiber@redhat.com)
 - Removing MongoDB cartridge dependencies (jdetiber@redhat.com)
