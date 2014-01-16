@@ -9,7 +9,7 @@
 
 Summary:       OpenShift plugin adding an administrative console to the broker
 Name:          rubygem-%{gem_name}
-Version: 1.16.3.1
+Version: 1.16.3.2
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -129,6 +129,10 @@ cp %{buildroot}/%{gem_dir}/gems/%{gem_name}-%{version}/conf/openshift-origin-adm
 %defattr(-,root,apache,-)
 
 %changelog
+* Thu Jan 16 2014 dobbymoodge <jolamb@redhat.com> 1.16.3.2-1
+- Bug 1050179 - Admin Console Page Title should be OpenShift Enterprise
+  (jdetiber@redhat.com)
+
 * Fri Jan 10 2014 Luke Meyer <lmeyer@redhat.com> 1.16.3.1-1
 - Changed a binary, must bump version for tito to build
 
