@@ -9,7 +9,7 @@
 
 Summary:       Cloud Development Controller
 Name:          rubygem-%{gem_name}
-Version: 1.17.10
+Version: 1.17.11
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -85,6 +85,14 @@ mkdir -p %{buildroot}/etc/openshift/
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Thu Jan 16 2014 dobbymoodge <jolamb@redhat.com> 1.17.11-1
+- Merge pull request #179 from sosiouxme/bz1034647
+  (dmcphers+openshiftbot@redhat.com)
+- <controller> Added ; to list of chars not allowed #cherrypick
+  (lnader@redhat.com)
+- <controller> Add checking for git ref #cherrypick (lnader@redhat.com)
+- <controller> UTF8 validation Bug 1034647  #cherrypick (lnader@redhat.com)
+
 * Tue Jan 14 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.17.10-1
 - <oo-admin-ctl-user> Add --logins-file, --create, and --quiet
   (jliggitt@redhat.com)
