@@ -16,7 +16,7 @@
 
 Summary:       OpenShift Origin broker components
 Name:          openshift-origin-broker
-Version:       1.15.2
+Version:       1.15.3
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
@@ -277,6 +277,17 @@ chcon -R -t httpd_var_run_t %{brokerdir}/httpd/run
 /sbin/restorecon -R -v /var/run
 
 %changelog
+* Thu Jan 16 2014 dobbymoodge <jolamb@redhat.com> 1.15.3-1
+- Merge pull request #179 from sosiouxme/bz1034647
+  (dmcphers+openshiftbot@redhat.com)
+- Merge pull request #199 from detiber/fixExtendedTestDeployments
+  (dmcphers+openshiftbot@redhat.com)
+- Temporarily disable code that breaks test (andy.goldstein@gmail.com)
+- <controller> Added ; to list of chars not allowed #cherrypick
+  (lnader@redhat.com)
+- <controller> Add checking for git ref #cherrypick (lnader@redhat.com)
+- <controller> UTF8 validation Bug 1034647  #cherrypick (lnader@redhat.com)
+
 * Tue Jan 14 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.15.2-1
 - <oo-admin-ctl-user> Add --logins-file, --create, and --quiet
   (jliggitt@redhat.com)
