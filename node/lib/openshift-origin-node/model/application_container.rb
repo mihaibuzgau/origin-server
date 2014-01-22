@@ -179,8 +179,10 @@ module OpenShift
       #
       # - model/unix_user.rb
       # context: root
-      # @param secret_token value of OPENSHIFT_SECRET_TOKEN for application
-      def create(secret_token = nil)
+      # @param secret_token     [String]      value of OPENSHIFT_SECRET_TOKEN for application
+      # @param generate_app_key [true, false] Should application ssh key be generated?
+      # @return [String] output from operations creating gear
+      def create(secret_token = nil, generate_app_key = false, create_initial_deployment_dir = true)
         output = ''
         notify_observers(:before_container_create)
         # lock to prevent race condition between create and delete of gear
@@ -192,7 +194,7 @@ module OpenShift
           resource = OpenShift::Runtime::Node.resource_limits
           no_overcommit_active = resource.get_bool('no_overcommit_active', false)
           overcommit_lock_file = "/var/lock/oo-create.overcommit"
-          File.open(overcommit_lock_file, File::RDWR|File::CREAT|File::TRUNC, 0600) do | overcommit_lock |
+          File.open(overcommit_lock_file, File::RDWR|File::CREAT|File::TRUNC, 0600) do |overcommit_lock|
             overcommit_lock.fcntl(Fcntl::F_SETFD, Fcntl::FD_CLOEXEC)
 
             if no_overcommit_active
@@ -210,13 +212,13 @@ module OpenShift
             overcommit_lock.flock(File::LOCK_UN) if no_overcommit_active
 
             add_env_var('SECRET_TOKEN', secret_token, true) if secret_token
-            output = generate_ssh_key
+            output = generate_ssh_key if generate_app_key
           end
 
           if @config.get("CREATE_APP_SYMLINKS").to_i == 1
-            unobfuscated = PathUtils.join(File.dirname(@container_dir),"#{@container_name}-#{@namespace}")
+            unobfuscated = PathUtils.join(File.dirname(@container_dir), "#{@container_name}-#{@namespace}")
             if not File.exists? unobfuscated
-              FileUtils.ln_s File.basename(@container_dir), unobfuscated, :force=>true
+              FileUtils.ln_s File.basename(@container_dir), unobfuscated, :force => true
             end
           end
 
