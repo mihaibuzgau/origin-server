@@ -6,7 +6,7 @@
 
 Summary:       Provides HA Proxy
 Name:          openshift-origin-cartridge-haproxy
-Version: 1.17.3.1
+Version: 1.17.3.2
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
@@ -46,6 +46,18 @@ HAProxy cartridge for OpenShift. (Cartridge Format V2)
 %doc %{cartridgedir}/LICENSE
 
 %changelog
+* Thu Jan 23 2014 dobbymoodge <jolamb@redhat.com> 1.17.3.2-1
+- Bumping cartridge version (bleanhar@redhat.com)
+- Bug 1029679, Bug 1056700: handle connection refused error with clean error
+  message (bparees@redhat.com)
+- Bug 1056483, Bug 1056700 - Better error messaging with direct usage of
+  haproxy_ctld (dmcphers@redhat.com)
+- Bug 1056700 - Bisect the scale up/down threshold more evenly for lower scale
+  numbers (dmcphers@redhat.com)
+- Bug 1051446, Bug 1056700 (dmcphers@redhat.com)
+- Bug 1056700 - Make sessions per gear configurable and use moving average for
+  num sessions (dmcphers@redhat.com)
+
 * Tue Jan 07 2014 Luke Meyer <lmeyer@redhat.com> 1.17.3.1-1
 - Bump version to make errata tool happy
 
