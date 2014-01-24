@@ -6,7 +6,7 @@
 
 Summary:       Provides HA Proxy
 Name:          openshift-origin-cartridge-haproxy
-Version: 1.17.3.2
+Version: 1.17.3.3
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
@@ -46,6 +46,11 @@ HAProxy cartridge for OpenShift. (Cartridge Format V2)
 %doc %{cartridgedir}/LICENSE
 
 %changelog
+* Fri Jan 24 2014 dobbymoodge <jolamb@redhat.com> 1.17.3.3-1
+- Version bump
+- Automatic commit of package [openshift-origin-cartridge-haproxy] release
+  [1.17.3.3-1]. (jolamb@redhat.com)
+
 * Thu Jan 23 2014 dobbymoodge <jolamb@redhat.com> 1.17.3.2-1
 - Bumping cartridge version (bleanhar@redhat.com)
 - Bug 1029679, Bug 1056700: handle connection refused error with clean error
