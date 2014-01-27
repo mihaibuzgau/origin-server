@@ -6,7 +6,7 @@
 
 Summary:       Provides HA Proxy
 Name:          openshift-origin-cartridge-haproxy
-Version: 1.17.3.3
+Version: 1.17.3.4
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
@@ -46,6 +46,19 @@ HAProxy cartridge for OpenShift. (Cartridge Format V2)
 %doc %{cartridgedir}/LICENSE
 
 %changelog
+* Mon Jan 27 2014 dobbymoodge <jolamb@redhat.com> 1.17.3.4-1
+- Bug 1044927, Bug 1057956 - Fix "Failed to get information from haproxy"
+  errors (dmcphers@redhat.com)
+- Merge pull request #207 from brenton/BZ1051190
+  (dmcphers+openshiftbot@redhat.com)
+- Bug 1051190 - checking for executible bits prior to execution
+  (mmcgrath@redhat.com)
+- Bug 1051190 - updated typos as per pull request (mmcgrath@redhat.com)
+- Bug 1051190 - allow for customized haproxy_ctld.rb file to exist
+  (mmcgrath@redhat.com)
+- Bug 1051190 - added haproxy_ctld comments and ability to run custom
+  haproxy_ctld (mmcgrath@redhat.com)
+
 * Fri Jan 24 2014 dobbymoodge <jolamb@redhat.com> 1.17.3.3-1
 - Version bump
 - Automatic commit of package [openshift-origin-cartridge-haproxy] release
