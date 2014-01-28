@@ -563,7 +563,7 @@ module OpenShift
       ##
       # Send the deployments to the broker
       #
-      def report_deployments(gear_env)
+      def report_deployments(gear_env, options = {})
         broker_addr = @config.get('BROKER_HOST')
         domain = gear_env['OPENSHIFT_NAMESPACE']
         app_name = gear_env['OPENSHIFT_APP_NAME']
@@ -576,16 +576,20 @@ module OpenShift
           params['deployments[]'] = deployments
           params[:application_id] = app_uuid
 
-          request = RestClient::Request.new(:method => :post,
-                                            :url => url,
-                                            :timeout => 30,
-                                            :headers => { :accept => 'application/json;version=1.6', :user_agent => 'OpenShift' },
-                                            :payload => params)
+          begin
+            request = RestClient::Request.new(:method => :post,
+                                              :url => url,
+                                              :timeout => 30,
+                                              :headers => { :accept => 'application/json;version=1.6', :user_agent => 'OpenShift' },
+                                              :payload => params)
 
-          response = request.execute
-
-          if 300 <= response.code
-            raise response
+            response = request.execute { |response, request, result| response }
+          rescue Errno::ECONNREFUSED
+            options[:out].puts "Failed to report deployment to broker.  This will be corrected on the next git push." if options[:out]
+          else
+            if 300 <= response.code
+              options[:out].puts "Failed to report deployment to broker.  This will be corrected on the next git push." if options[:out]
+            end
           end
         end
       end
