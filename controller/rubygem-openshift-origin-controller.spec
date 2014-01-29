@@ -9,7 +9,7 @@
 
 Summary:       Cloud Development Controller
 Name:          rubygem-%{gem_name}
-Version: 1.17.12
+Version: 1.17.12.1
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -85,6 +85,12 @@ mkdir -p %{buildroot}/etc/openshift/
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Tue Jan 28 2014 Luke Meyer <lmeyer@redhat.com> 1.17.12.1-1
+- Bug 1035186, Bug 1056899 - Cannot scale up via haproxy_ctld in the secondary
+  haproxy since broker auth does not exist on that gear (bleanhar@redhat.com)
+- <broker> conf to allow alias under cloud domain - bug 1040257
+  (lmeyer@redhat.com)
+
 * Mon Jan 27 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.17.12-1
 - Fix bug 1039760, bug 1045967: Add patch support for env vars
   (jliggitt@redhat.com)
