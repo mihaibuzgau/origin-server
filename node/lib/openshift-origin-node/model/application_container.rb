@@ -207,7 +207,7 @@ module OpenShift
             end
 
             @container_plugin = Containerization::Plugin.new(self)
-            @container_plugin.create
+            @container_plugin.create(create_initial_deployment_dir)
 
             overcommit_lock.flock(File::LOCK_UN) if no_overcommit_active
 
