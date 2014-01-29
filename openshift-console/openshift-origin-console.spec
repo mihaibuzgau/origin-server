@@ -253,6 +253,10 @@ _EOF
 /sbin/fixfiles -R %{?scl:%scl_prefix}mod_passenger restore
 /sbin/restorecon -R -v /var/run
 %changelog
+* Wed Jan 29 2014 Unknown name 1.15.1.2-3
+- BZ1056905 -  Error message should be highlighted when adding invalid member
+  to domain (calfonso@redhat.com)
+
 * Tue Jan 14 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.15.1.2-2
 - Rebuild for new console rubygem
 
