@@ -16,7 +16,7 @@
 
 Summary:       OpenShift Origin broker components
 Name:          openshift-origin-broker
-Version:       1.15.3
+Version:       1.15.3.1
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
@@ -277,6 +277,13 @@ chcon -R -t httpd_var_run_t %{brokerdir}/httpd/run
 /sbin/restorecon -R -v /var/run
 
 %changelog
+* Tue Jan 28 2014 Luke Meyer <lmeyer@redhat.com> 1.15.3.1-1
+- Merge pull request #180 from sosiouxme/bug1040257
+  (dmcphers+openshiftbot@redhat.com)
+- <broker> always prevent alias conflicts with app names (lmeyer@redhat.com)
+- <broker> conf to allow alias under cloud domain - bug 1040257
+  (lmeyer@redhat.com)
+
 * Thu Jan 16 2014 dobbymoodge <jolamb@redhat.com> 1.15.3-1
 - Merge pull request #179 from sosiouxme/bz1034647
   (dmcphers+openshiftbot@redhat.com)
