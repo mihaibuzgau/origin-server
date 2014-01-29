@@ -9,7 +9,7 @@
 
 Summary:       OpenShift Origin Management Console
 Name:          rubygem-%{gem_name}
-Version: 1.17.6.5
+Version: 1.17.6.6
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -144,6 +144,9 @@ cp -a ./%{gem_dir}/* %{buildroot}%{gem_dir}/
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Wed Jan 29 2014 Unknown name 1.17.6.6-1
+- Fix bug 1056441: Member add message color (jliggitt@redhat.com)
+
 * Tue Jan 14 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.17.6.5-1
 - Merge pull request #197 from brenton/BZ1017656
   (dmcphers+openshiftbot@redhat.com)
