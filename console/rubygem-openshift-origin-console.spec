@@ -144,6 +144,11 @@ cp -a ./%{gem_dir}/* %{buildroot}%{gem_dir}/
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Thu Jan 30 2014 Chris Alfonso <calfonso@redhat.com> 1.17.6.6-2
+- Bumping release for rubygem-openshift-origin-console (calfonso@redhat.com)
+- Automatic commit of package [rubygem-openshift-origin-console] release
+  [1.17.6.6-1]. (calfonso@redhat.com)
+
 * Wed Jan 29 2014 Unknown name 1.17.6.6-1
 - Fix bug 1056441: Member add message color (jliggitt@redhat.com)
 
