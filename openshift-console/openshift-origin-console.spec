@@ -253,6 +253,11 @@ _EOF
 /sbin/fixfiles -R %{?scl:%scl_prefix}mod_passenger restore
 /sbin/restorecon -R -v /var/run
 %changelog
+* Thu Jan 30 2014 Chris Alfonso <calfonso@redhat.com> 1.15.1.2-4
+- Bumping release for openshif-origin-console (calfonso@redhat.com)
+- Automatic commit of package [openshift-origin-console] release [1.15.1.2-3].
+  (calfonso@redhat.com)
+
 * Wed Jan 29 2014 Unknown name 1.15.1.2-3
 - BZ1056905 -  Error message should be highlighted when adding invalid member
   to domain (calfonso@redhat.com)
