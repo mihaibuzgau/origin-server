@@ -9,8 +9,8 @@
 
 Summary:       OpenShift Origin Management Console
 Name:          rubygem-%{gem_name}
-Version: 1.17.6.6
-Release:       2%{?dist}
+Version: 1.17.6.7
+Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           https://openshift.redhat.com
@@ -144,6 +144,10 @@ cp -a ./%{gem_dir}/* %{buildroot}%{gem_dir}/
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Thu Jan 30 2014 Chris Alfonso <calfonso@redhat.com> 1.17.6.7-1
+Bumping the rpm version to reflect upstream changes
+- 
+
 * Thu Jan 30 2014 Chris Alfonso <calfonso@redhat.com> 1.17.6.6-2
 - Bumping release for rubygem-openshift-origin-console (calfonso@redhat.com)
 - Automatic commit of package [rubygem-openshift-origin-console] release
