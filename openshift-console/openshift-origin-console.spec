@@ -16,7 +16,7 @@
 Summary:       The OpenShift Management Console
 Name:          openshift-origin-console
 Version:       1.15.1.2
-Release:       3%{?dist}
+Release:       4%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
 URL:           http://www.openshift.com
