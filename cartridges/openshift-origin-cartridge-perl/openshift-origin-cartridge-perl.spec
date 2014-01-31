@@ -1,4 +1,5 @@
 %global cartridgedir %{_libexecdir}/openshift/cartridges/perl
+%global httpdconfdir /etc/openshift/cart.conf.d/httpd/perl
 
 Name:          openshift-origin-cartridge-perl
 Version: 1.16.6
@@ -50,6 +51,7 @@ Perl cartridge for OpenShift. (Cartridge Format V2)
 %install
 %__mkdir -p %{buildroot}%{cartridgedir}
 %__cp -r * %{buildroot}%{cartridgedir}
+%__mkdir -p %{buildroot}%{httpdconfdir}
 
 %if 0%{?fedora}%{?rhel} <= 6
 rm -rf %{buildroot}%{cartridgedir}/versions/5.16
@@ -68,6 +70,8 @@ rm %{buildroot}%{cartridgedir}/metadata/manifest.yml.*
 %doc %{cartridgedir}/README.md
 %doc %{cartridgedir}/COPYRIGHT
 %doc %{cartridgedir}/LICENSE
+%dir %{httpdconfdir}
+%attr(0755,-,-) %{httpdconfdir}
 
 
 %changelog
