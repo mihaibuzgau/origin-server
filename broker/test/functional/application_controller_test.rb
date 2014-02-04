@@ -30,6 +30,46 @@ class ApplicationControllerTest < ActionController::TestCase
     end
   end
 
+  # e.g.: stubs_config :openshift, :foo => "bar", :baz => "booyah"
+  def stubs_config(sym, with)
+    hash = Rails.configuration.send sym
+    Rails.configuration.stubs(sym).returns(hash.merge(with))
+  end
+
+  def default_git_url_setup
+    @default_git_url = "https://default.github.com/default.git"
+    @app_name = "app#{@random}"
+    @seen_urls = seen_urls = []
+    stubs_config :openshift, app_template_for: OpenShift::Controller::Configuration.parse_url_hash(
+                                      "foo|http://example.com/ #{PHP_VERSION}|#{@default_git_url}")
+    # the way this is done, the git url isn't recorded anywhere on the broker,
+    # so we need to intercept a call... better approaches welcome
+    afog = AddFeaturesOpGroup.new() # test hinges on nothing important happening at first initialize
+    AddFeaturesOpGroup.expects(:new).with() do |hash|
+      afog.__send__(:initialize, hash)   # initialize the stand-in to return later
+      seen_urls.push hash[:init_git_url] # compare later to expectation
+      true # if we tested expectation here, would get 500 error and have to look in logs
+    end.returns(afog)
+  end
+
+  test "app created with admin-defined default initial_git_url" do
+    default_git_url_setup
+    # try it with no git URL provided
+    post :create, {"name" => @app_name, "cartridge" => PHP_VERSION, "domain_id" => @domain.namespace}
+    assert_response :created
+    assert_equal @default_git_url, @seen_urls[0]
+  end
+
+  test "app created overriding admin-defined default initial_git_url" do
+    default_git_url_setup
+    # try it WITH git URL provided
+    test_url="https://test.github.com/test.git"
+    post :create, {"name" => @app_name, "cartridge" => PHP_VERSION, "domain_id" => @domain.namespace,
+                   "initial_git_url" => test_url}
+    assert_response :created
+    assert_equal test_url, @seen_urls[0]
+  end
+
   test "app create show list update and destroy by domain and app name" do
     @app_name = "app#{@random}"
     post :create, {"name" => @app_name, "cartridge" => PHP_VERSION, "domain_id" => @domain.namespace}
@@ -56,7 +96,7 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_response :success
     assert json = JSON.parse(response.body)
     #TODO uncomment once save to mongo is fixed
-    assert_equal json['data']['auto_deploy'], false 
+    assert_equal json['data']['auto_deploy'], false
     assert_equal json['data']['keep_deployments'], 2
     assert_equal json['data']['deployment_type'], 'binary'
     assert_equal json['data']['deployment_branch'], 'stage'
@@ -213,12 +253,12 @@ class ApplicationControllerTest < ActionController::TestCase
     @app_name = "app#{@random}"
     post :create, {"name" => @app_name, "cartridge" => PHP_VERSION, "domain_id" => @domain.namespace}
     assert_response :created
-    
+
     put :update, {"id" => @app_name,
                   "domain_id" => @domain.namespace
                  }
     assert_response :unprocessable_entity
-    
+
     put :update, {"id" => @app_name,
                   "domain_id" => @domain.namespace,
                   "auto_deploy" => 'blah'
@@ -242,7 +282,7 @@ class ApplicationControllerTest < ActionController::TestCase
                   "deployment_branch" => 'a'*257
                   }
     assert_response :unprocessable_entity
-    
+
     # See git-check-ref-format man page for rules
     invalid_values = ["abc.lock", "abc/.xyz", "abc..xyz", "/abc", "abc/", "abc//xyz", "abc.", "abc@{xyz}"]
     invalid_chars = ["^", "~", ":", "?", "*", "\\", " ", "[", ";"]
@@ -256,7 +296,7 @@ class ApplicationControllerTest < ActionController::TestCase
                    }
       assert_response :unprocessable_entity, "Expected value ref:#{invalid_value} to be rejected"
     end
-  end    
+  end
 
   test "get application in all version" do
     @app_name = "app#{@random}"
