@@ -9,8 +9,8 @@
 
 Summary:       OpenShift plugin for DNS update service using nsupdate
 Name:          rubygem-%{gem_name}
-Version:       1.15.1
-Release:       2%{?dist}
+Version:       1.15.2
+Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -89,6 +89,9 @@ cp %{buildroot}/%{gem_dir}/gems/%{gem_name}-%{version}/conf/openshift-origin-dns
 
 
 %changelog
+* Wed Feb 05 2014 Chris Alfonso <calfonso@redhat.com> 1.15.2-1
+- Add key algorithm for record removal (calfonso@redhat.com)
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.15.1-2
 - Release bump for OSE 2.0 RC1 
 
