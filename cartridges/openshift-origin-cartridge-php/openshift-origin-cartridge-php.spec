@@ -3,7 +3,7 @@
 %global httpdconfdir /etc/openshift/cart.conf.d/httpd/php
 
 Name:          openshift-origin-cartridge-php
-Version: 1.17.3.2
+Version: 1.17.3.3
 Release:       1%{?dist}
 Summary:       Php cartridge
 Group:         Development/Languages
@@ -78,6 +78,14 @@ rm %{buildroot}%{cartridgedir}/metadata/manifest.yml.*
 
 
 %changelog
+* Thu Feb 06 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.17.3.3-1
+- Modify PHP stop() to skip httpd stop when the process is already dead
+  #cherrypick (hripps@redhat.com)
+- <httpd carts> bug 1054916: ensure extra httpd conf dirs exist #cherrypick
+  (lmeyer@redhat.com)
+- <php cart> enable providing custom gear server confs - bug 1054916
+  #cherrypick (lmeyer@redhat.com)
+
 * Tue Jan 07 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.17.3.2-1
 - Bug 1033581, Bug 1034356 - Adding upgrade logic to remove the unneeded
   jenkins_shell_command files (bleanhar@redhat.com)
