@@ -6,8 +6,8 @@
 
 Summary:       Utility scripts for the OpenShift Origin node
 Name:          openshift-origin-node-util
-Version: 1.17.4
-Release:       2%{?dist}
+Version: 1.17.5
+Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
 URL:           http://www.openshift.com
@@ -149,6 +149,10 @@ cp -p init.d/openshift-gears %{buildroot}%{_initddir}/
 %endif
 
 %changelog
+* Thu Feb 06 2014 dobbymoodge <jolamb@redhat.com> 1.17.5-1
+- Bug 1033523, Bug 1061424 - The hot_deploy marker/--hot-deploy option can not
+  take effect when deploying app with binary deployment (bparees@redhat.com)
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 1.17.4-2
 - Release bump for OSE 2.0 RC1
 
