@@ -7,7 +7,7 @@
 
 Summary:       Utility scripts for the OpenShift Origin broker
 Name:          openshift-origin-broker-util
-Version: 1.17.6.3
+Version: 1.17.6.4
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
@@ -93,6 +93,9 @@ cp -p man/*.8 %{buildroot}%{_mandir}/man8/
 %{_mandir}/man8/oo-stats.8.gz
 
 %changelog
+* Thu Feb 06 2014 dobbymoodge <jolamb@redhat.com> 1.17.6.4-1
+- Setting +x for scripts in broker-util (jolamb@redhat.com)
+
 * Wed Feb 05 2014 Chris Alfonso <calfonso@redhat.com> 1.17.6.3-1
 - Add support for more secure key algorithms (calfonso@redhat.com)
 
