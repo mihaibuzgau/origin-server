@@ -271,6 +271,19 @@ fi
 %attr(0755,-,-) /etc/cron.daily/openshift-origin-stale-lockfiles
 
 %changelog
+* Thu Feb 06 2014 dobbymoodge <jolamb@redhat.com> 1.17.5.9-1
+- version bump to leapfrog conflicting tag from origin-server
+  (jolamb@redhat.com)
+- Bug 1033523, Bug 1061424 - The hot_deploy marker/--hot-deploy option can not
+  take effect when deploying app with binary deployment (bparees@redhat.com)
+- Bug 1038129, Bug 1061423 - Gear is not started after restore when hot_deploy
+  marker is present (jhadvig@redhat.com)
+- Bug 1054403, Bug 1061422 - Reset empty metadata.json file (jhonce@redhat.com)
+- Bug 1045972 - Removing whitespace on default MOTD_FILE value
+  (bleanhar@redhat.com)
+- Bug 1027122, Bug 1032798, Bug 1040824 Various iptables integration fixes
+  (bleanhar@redhat.com)
+
 * Tue Jan 28 2014 Luke Meyer <lmeyer@redhat.com> 1.17.5.7-1
 - <deployment> Bug 1054944: reg fails = haproxy dead #cherrypick
   (pmorie@gmail.com)
