@@ -99,7 +99,7 @@ class PlatformBinaryDeployTest < OpenShift::NodeBareTestCase
     @api.set_deployment_type(app_name2, 'binary')
     @api.deploy_artifact(app_id2, app_name2, artifact_path, hot_deploy)
 
-    @api.assert_http_title_for_app(app_name2, @namespace, CHANGED_TITLE, "Check for changed title in second app failed", 5)
+    @api.assert_http_title_for_app(app_name2, @namespace, CHANGED_TITLE)
     puts "checking for last stop"
     if hot_deploy && File.exist?("#{cart_dir}/last_stop")
       flunk ("Cartridge should not have been restarted for hot_deploy=true")
