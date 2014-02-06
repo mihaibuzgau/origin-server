@@ -7,7 +7,7 @@
 %global httpdconfdir /etc/openshift/cart.conf.d/httpd/ruby
 
 Name:          openshift-origin-cartridge-ruby
-Version: 1.17.4
+Version: 1.17.5
 Release:       1%{?dist}
 Summary:       Ruby cartridge
 Group:         Development/Languages
@@ -186,6 +186,18 @@ Ruby cartridge for OpenShift. (Cartridge Format V2)
 %attr(0755,-,-) %{httpdconfdir}
 
 %changelog
+* Thu Feb 06 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.17.5-1
+- <httpd carts> bug 1054916: ensure extra httpd conf dirs exist #cherrypick
+  (lmeyer@redhat.com)
+- Merge pull request #217 from brenton/BZ1057447
+  (dmcphers+openshiftbot@redhat.com)
+- <ruby cart> enable providing custom gear server confs - bug 1054916
+  #cherrypick (lmeyer@redhat.com)
+- Applied fix to other affected cartridges (hripps@redhat.com)
+- Cartridge version bump for OSE (bleanhar@redhat.com)
+- Bug 1052276, Bug 1057447 - Check if tmp/ directory exists before ruby restart
+  (mfojtik@redhat.com)
+
 * Tue Jan 07 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.17.4-1
 - Bug 1033581, Bug 1034356 - Adding upgrade logic to remove the unneeded
   jenkins_shell_command files (bleanhar@redhat.com)
