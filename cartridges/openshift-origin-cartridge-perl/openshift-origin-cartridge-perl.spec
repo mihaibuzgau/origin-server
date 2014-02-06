@@ -2,7 +2,7 @@
 %global httpdconfdir /etc/openshift/cart.conf.d/httpd/perl
 
 Name:          openshift-origin-cartridge-perl
-Version: 1.16.6
+Version: 1.16.7
 Release:       1%{?dist}
 Summary:       Perl cartridge
 Group:         Development/Languages
@@ -75,6 +75,14 @@ rm %{buildroot}%{cartridgedir}/metadata/manifest.yml.*
 
 
 %changelog
+* Thu Feb 06 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.16.7-1
+- <httpd carts> bug 1054916: ensure extra httpd conf dirs exist #cherrypick
+  (lmeyer@redhat.com)
+- <perl,python,phpmyadmin carts> bug 1055095 #cherrypick (lmeyer@redhat.com)
+- <perl cart> enable providing custom gear server confs - bug 1054916
+  #cherrypick (lmeyer@redhat.com)
+- Applied fix to other affected cartridges (hripps@redhat.com)
+
 * Mon Jan 13 2014 Brenton Leanhardt <bleanhar@redhat.com> 1.16.6-1
 - Bug 1032901, Bug 1047440 - Removed perl5lib folder from GIT and added to
   dependency_dirs (mfojtik@redhat.com)
