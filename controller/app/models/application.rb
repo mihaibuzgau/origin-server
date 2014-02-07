@@ -250,6 +250,9 @@ class Application
           group_overrides << group_override
         end
 
+        # supply default initial app template if configured in broker conf
+        init_git_url ||= framework_cartridges.map {|name| Rails.application.config.openshift[:app_template_for][name]}.compact.first
+
         add_feature_result = app.add_features(features, group_overrides, init_git_url, user_env_vars)
         result_io.append add_feature_result
       rescue Exception => e
