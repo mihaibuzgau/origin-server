@@ -391,6 +391,8 @@ module OpenShift
             Rails.logger.error "The application #{app.name} (#{app._id.to_s}) does not have its secret token set"
           end
 
+          args['--with-initial-deployment-dir'] = initial_deployment_dir_required
+
           mcoll_reply = execute_direct(@@C_CONTROLLER, 'app-create', args)
 
           begin
