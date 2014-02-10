@@ -21,7 +21,7 @@ module OpenShift
         #   # ~/app-root/runtime/data -> ../data
         #
         # Returns nil on Success and raises on Failure.
-        def initialize_homedir(basedir, homedir)
+        def initialize_homedir(basedir, homedir, create_initial_deployment_dir = true)
           notify_observers(:before_initialize_homedir)
           homedir = homedir.end_with?('/') ? homedir : homedir + '/'
 
@@ -79,7 +79,8 @@ module OpenShift
           }
 
           # create initial deployment directory
-          deployment_datetime = create_deployment_dir
+          # this step is not needed during application moves
+          deployment_datetime = create_deployment_dir if create_initial_deployment_dir
 
           add_env_var("HISTFILE", PathUtils.join(data_dir, ".bash_history"))
           profile = PathUtils.join(data_dir, ".bash_profile")
@@ -151,6 +152,11 @@ module OpenShift
 
           ::OpenShift::Runtime::FrontendHttpServer.new(self).create
 
+          ssh_dir = PathUtils.join(homedir, '.openshift_ssh')
+          FileUtils.mkdir_p(ssh_dir)
+          FileUtils.chmod(0750, ssh_dir)
+          set_rw_permission(ssh_dir)
+
           # Fix SELinux context for cart dirs
           set_rw_permission(profile)
           reset_permission_R(homedir)
@@ -165,9 +171,6 @@ module OpenShift
           ssh_key        = PathUtils.join(ssh_dir, 'id_rsa')
           ssh_public_key = ssh_key + '.pub'
 
-          FileUtils.mkdir_p(ssh_dir)
-          set_rw_permission(ssh_dir)
-
           run_in_container_context("/usr/bin/ssh-keygen -N '' -f #{ssh_key}",
                                    chdir:               @container_dir,
                                    timeout:             @hourglass.remaining,
@@ -176,9 +179,6 @@ module OpenShift
           FileUtils.touch(known_hosts)
           FileUtils.touch(ssh_config)
 
-          set_rw_permission_R(ssh_dir)
-
-          FileUtils.chmod(0750, ssh_dir)
           FileUtils.chmod(0600, [ssh_key, ssh_public_key])
           FileUtils.chmod(0660, [known_hosts, ssh_config])
 

@@ -322,9 +322,11 @@ module MCollective
         output = ''
         begin
           token = args.key?('--with-secret-token') ? args['--with-secret-token'].to_s : nil
+          generate_app_key = args.key?('--with-generate-app-key') ? args['--with-generate-app-key'] : false
+          create_initial_deployment_dir = args.key?('--with-initial-deployment-dir') ? args['--with-initial-deployment-dir'] : true
 
           container = get_app_container_from_args(args)
-          output = container.create(token)
+          output = container.create(token, generate_app_key, create_initial_deployment_dir)
         rescue OpenShift::Runtime::UserCreationException => e
           report_exception e
           Log.instance.info e.message
