@@ -16,7 +16,7 @@
 
 Summary:       OpenShift Origin broker components
 Name:          openshift-origin-broker
-Version:       1.15.3.2
+Version:       1.15.3.3
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
@@ -277,6 +277,13 @@ chcon -R -t httpd_var_run_t %{brokerdir}/httpd/run
 /sbin/restorecon -R -v /var/run
 
 %changelog
+* Mon Feb 10 2014 dobbymoodge <jolamb@redhat.com> 1.15.3.3-1
+- <broker func tests> for custom default templates - RFE 1057153
+  (lmeyer@redhat.com)
+- <broker unit tests> for config readers - RFE 1057153 (lmeyer@redhat.com)
+- <broker> RFE 1057153: enable customizing default app templates
+  (lmeyer@redhat.com)
+
 * Thu Feb 06 2014 dobbymoodge <jolamb@redhat.com> 1.15.3.2-1
 - Bug 1048139 - Adding missing setting to broker.conf (bleanhar@redhat.com)
 
