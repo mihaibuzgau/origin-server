@@ -9,7 +9,7 @@
 
 Summary:       Cloud Development Controller
 Name:          rubygem-%{gem_name}
-Version: 1.17.12.1
+Version: 1.17.12.2
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -85,6 +85,11 @@ mkdir -p %{buildroot}/etc/openshift/
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Mon Feb 10 2014 dobbymoodge <jolamb@redhat.com> 1.17.12.2-1
+- fix bz1036507, Bug 1062844 - improve error message (rchopra@redhat.com)
+- <broker> RFE 1057153: enable customizing default app templates
+  (lmeyer@redhat.com)
+
 * Tue Jan 28 2014 Luke Meyer <lmeyer@redhat.com> 1.17.12.1-1
 - Bug 1035186, Bug 1056899 - Cannot scale up via haproxy_ctld in the secondary
   haproxy since broker auth does not exist on that gear (bleanhar@redhat.com)
