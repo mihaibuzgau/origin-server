@@ -9,8 +9,8 @@
 
 Summary:       OpenShift plugin for SELinux based containers
 Name:          rubygem-%{gem_name}
-Version: 0.4.1
-Release:       2%{?dist}
+Version: 0.4.1.2
+Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           http://openshift.redhat.com
@@ -77,6 +77,10 @@ cp %{buildroot}/%{gem_instdir}/conf/openshift-origin-container-selinux.conf.exam
 /etc/openshift/node-plugins.d/
 
 %changelog
+* Mon Feb 10 2014 dobbymoodge <jolamb@redhat.com> 0.4.1.2-1
+- Bug 1056394 - First pass at avoiding deployment dir create on app moves
+  (bleanhar@redhat.com)
+
 * Fri Nov 15 2013 Brenton Leanhardt <bleanhar@redhat.com> 0.4.1-2
 - Release bump for OSE 2.0 RC1
 
