@@ -10,7 +10,7 @@
 
 Summary:       OpenShift plugin for mcollective service
 Name:          rubygem-%{gem_name}
-Version: 1.17.4
+Version: 1.17.5
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -85,6 +85,12 @@ sed -i -e "s|\(/etc/mcollective/client.cfg\)|%{scl_root}/\1|" %{buildroot}/etc/o
 %attr(0644,-,-) %ghost %{?scl:%scl_root}/etc/mcollective/client.cfg
 
 %changelog
+* Mon Feb 10 2014 dobbymoodge <jolamb@redhat.com> 1.17.5-1
+- Bug 1056394 - --with-initial-deployment-dir only applies to gear creation
+  (bleanhar@redhat.com)
+- Bug 1056394 - First pass at avoiding deployment dir create on app moves
+  (bleanhar@redhat.com)
+
 * Mon Dec 23 2013 Luke Meyer <lmeyer@redhat.com> 1.17.4-1
 - Bug 1032906: Fix generic error handling in Openshift agent #cherrypick
   (ironcladlou@gmail.com)
