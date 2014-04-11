@@ -13,9 +13,6 @@
     <hudson.plugins.openshift.OpenShiftBuilderSizeJobProperty>
       <builderSize>small</builderSize>
     </hudson.plugins.openshift.OpenShiftBuilderSizeJobProperty>
-    <hudson.plugins.openshift.OpenShiftBuilderTypeJobProperty>
-      <builderType><%= @builder_type %></builderType>
-    </hudson.plugins.openshift.OpenShiftBuilderTypeJobProperty>
     <hudson.plugins.openshift.OpenShiftApplicationUUIDJobProperty>
       <applicationUUID><%= @application_uuid %></applicationUUID>
     </hudson.plugins.openshift.OpenShiftApplicationUUIDJobProperty>

@@ -10,8 +10,18 @@ rm -f $OPENSHIFT_HOMEDIR/app-deployments/current/metadata.json
 if ! marker_present "force_clean_build"; then
   # don't fail if these rsyncs fail
   set +e
-  rsync $upstream_ssh:'$OPENSHIFT_BUILD_DEPENDENCIES_DIR' $OPENSHIFT_BUILD_DEPENDENCIES_DIR
-  rsync $upstream_ssh:'$OPENSHIFT_DEPENDENCIES_DIR' $OPENSHIFT_DEPENDENCIES_DIR
+  if [ `uname -o` = "Cygwin" ]
+    then
+        build_dependencies_dir=`cygpath $OPENSHIFT_BUILD_DEPENDENCIES_DIR`
+        dependencies_dir=`cygpath $OPENSHIFT_DEPENDENCIES_DIR`
+        rsync $upstream_ssh:'$OPENSHIFT_BUILD_DEPENDENCIES_DIR' $build_dependencies_dir
+        rsync $upstream_ssh:'$OPENSHIFT_DEPENDENCIES_DIR' $dependencies_dir
+    else
+        rsync $upstream_ssh:'$OPENSHIFT_BUILD_DEPENDENCIES_DIR' $OPENSHIFT_BUILD_DEPENDENCIES_DIR
+        rsync $upstream_ssh:'$OPENSHIFT_DEPENDENCIES_DIR' $OPENSHIFT_DEPENDENCIES_DIR
+    fi
+
+
   set -e
 fi
 
@@ -28,10 +38,22 @@ $GIT_SSH $upstream_ssh "gear stop --conditional --exclude-web-proxy --git-ref $G
 deployment_dir=`$GIT_SSH $upstream_ssh 'gear create-deployment-dir'`
 
 # Push content back to application
-rsync $OPENSHIFT_HOMEDIR/app-deployments/current/metadata.json $upstream_ssh:app-deployments/$deployment_dir/metadata.json
-rsync --exclude .git $WORKSPACE/ $upstream_ssh:app-root/runtime/repo/
-rsync $OPENSHIFT_BUILD_DEPENDENCIES_DIR $upstream_ssh:app-root/runtime/build-dependencies/
-rsync $OPENSHIFT_DEPENDENCIES_DIR $upstream_ssh:app-root/runtime/dependencies/
+if [ `uname -o` = "Cygwin" ]
+ then
+    homedir=`cygpath $OPENSHIFT_HOMEDIR`
+    build_dependencies_dir=`cygpath $OPENSHIFT_BUILD_DEPENDENCIES_DIR`
+    dependencies_dir=`cygpath $OPENSHIFT_DEPENDENCIES_DIR`
+    cygworkspace=`cygpath $WORKSPACE`
+    rsync $homedir/app-deployments/current/metadata.json $upstream_ssh:app-deployments/$deployment_dir/metadata.json
+    rsync --exclude .git $cygworkspace/ $upstream_ssh:app-root/runtime/repo/
+    rsync $build_dependencies_dir $upstream_ssh:app-root/runtime/build-dependencies/
+    rsync $dependencies_dir $upstream_ssh:app-root/runtime/dependencies/
+ else
+    rsync $OPENSHIFT_HOMEDIR/app-deployments/current/metadata.json $upstream_ssh:app-deployments/$deployment_dir/metadata.json
+    rsync --exclude .git $WORKSPACE/ $upstream_ssh:app-root/runtime/repo/
+    rsync $OPENSHIFT_BUILD_DEPENDENCIES_DIR $upstream_ssh:app-root/runtime/build-dependencies/
+    rsync $OPENSHIFT_DEPENDENCIES_DIR $upstream_ssh:app-root/runtime/dependencies/
+ fi
 
 # Configure / start app
 $GIT_SSH $upstream_ssh "gear remotedeploy --deployment-datetime $deployment_dir"

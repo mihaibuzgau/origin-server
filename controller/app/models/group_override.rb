@@ -28,7 +28,7 @@ class GroupOverride
   def self.reduce(overrides, limit_to=nil)
     by_path = {}
     overrides.each do |override|
-      next if override.blank?
+      #next if override.blank?
       found = nil
       override.components.each do |c|
         if previous = by_path[c.path]
